@@ -27,8 +27,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         getData()
         
     }
+    
+    // DetailsVC'den NotCenter ile gozlemci ekleyerek DetailsVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // newData mesajini gordugunde getData'yi cagirir
+        // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
+        NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
+    
+    }
+    
     // Core Data'dan Veri cekmede kullanilir
-    func getData() {
+    @objc func getData() {
+        
+        // Verileri viewWillAppear'da notCenter ile cekerken burada temizlemeden cifter cekme islemi yapiyor, bunun onune gecmek icin array'lari basta kaldiriyoruz
+        nameArray.removeAll()
+        idArray.removeAll()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
