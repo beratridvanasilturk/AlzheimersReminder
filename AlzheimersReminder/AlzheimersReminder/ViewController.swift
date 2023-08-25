@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     }
     
     @objc func addButtonTapped() {
-        performSegue(withIdentifier: "toDetailVC", sender: nil)
+        performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
 }
 
