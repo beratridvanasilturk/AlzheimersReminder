@@ -91,5 +91,8 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         } catch {
             print("Error: Image Save")
         }
+        
+        // Bir onceki VC'a gecis icin kullanilir
+        self.navigationController?.popViewController(animated: true)
     }
 }
