@@ -21,10 +21,56 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if chosenImage != "" {
+        if chosenImage != "" {            
+            
             // Core Data'dan cekecegiz
+            // Ilk olarak appDelegate'i cagirdik
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            // Context'i (baglam) olusturduk
+            let context = appDelegate.persistentContainer.viewContext
             
+            // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
             
+            // Filtreleme islemi icin
+            let idString = chosenImageId?.uuidString
+            // Predicate bizim yazdigimiz kosulu bulup bize fetch eder
+            // id = %@ : id'si virgulden sonraki argumana (idString'e) esit olan seyi bul anlamindadir
+            // id yerine name getirmesini isteseydik ..format: "name = %@", self.chosenImage) yazardik. Biz ayni name'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
+            fetchRequest.predicate = NSPredicate(format: "id = %@", idString!)
+            
+            // Verimi artirmak icin cache datalari duzenler
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                if results.count > 0 {
+                
+                    for result in results as! [NSManagedObject] {
+                
+                        if let name = result.value(forKey: "name") as? String {
+                            nameTextField.text = name
+                        }
+                        if let name2 = result.value(forKey: "name2") as? String {
+                            name2TextField.text = name2
+                        }
+                        if let number = result.value(forKey: "number") as? Int {
+                            numberTextField.text = String(number)
+                        }
+                        if let imageData = result.value(forKey: "image") as? Data {
+                            let image = UIImage(data: imageData)
+                            imageView.image = image
+                        }
+                    }
+                    
+                
+                }
+                
+            } catch {
+                print("Error do-catch in DetailsVC")
+                
+            }
         }
         
         

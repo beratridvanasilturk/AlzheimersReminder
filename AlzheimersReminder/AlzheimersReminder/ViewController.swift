@@ -62,24 +62,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let results = try context.fetch(fetchRequest)
             // NSManagedObj: results'dan dizi olarak gelen datalari tek tek objelere ayirmak, ayiklamak icin kullanilir
             
-            for result in results as! [NSManagedObject] {
-                // Anahtar kelimeyi verip (ornek olmasi acisindan name verilmistir) AnyObj aliyoruz ve bunu String olark Cast etmeye calisiyoruz, casting olumsuz sonuclanirsa islem yapilamayacaktir
-                if let name = result.value(forKey: "name") as? String {
-                    self.nameArray.append(name)
-                }
-                
-                if let id = result.value(forKey: "name") as? UUID {
-                    self.idArray.append(id)
-                }
-             
-                // Gelen yeni veri sonrasi table view guncellenir
-                self.tableView.reloadData()
+            // Hic gorsel yokken hata almamak adina if kosulu bagladik
+            if results.count > 0 {
+                for result in results as! [NSManagedObject] {
+                    // Kullanmak istedigimiz anahtar kelimeyi verip karsiliginda bir AnyObj aliyoruz ve bunu String olark Cast etmeye calisiyoruz, casting olumsuz sonuclanirsa bu islem hic yapilamayacaktir
+                    if let name = result.value(forKey: "name") as? String {
+                        self.nameArray.append(name)
+                    }
                     
+                    if let id = result.value(forKey: "id") as? UUID {
+                        self.idArray.append(id)
+                    }
+                    
+                    // Gelen yeni veri sonrasi table view guncellenir
+                    self.tableView.reloadData()
+                    
+                }
             }
                     
-                    
         } catch {
-            print("Error in Data Fetch Resulst")
+            print("Error: Data Fetch Resulst in ViewController")
         }
         
     }
@@ -90,16 +92,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return nameArray.count
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = nameArray[indexPath.row]
         return cell
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameArray.count
-    }
-    
+   
     
     // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini detailsVC'da gostermede kullanacagiz. Yani 1 VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
