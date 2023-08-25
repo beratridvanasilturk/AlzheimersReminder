@@ -15,10 +15,17 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     
+    var chosenImage = ""
+    var chosenImageId : UUID?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        if chosenImage != "" {
+            // Core Data'dan cekecegiz
+            
+            
+        }
         
         
         

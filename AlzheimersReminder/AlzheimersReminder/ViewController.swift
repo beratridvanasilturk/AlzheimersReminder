@@ -15,6 +15,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var nameArray = [String]()
     var idArray = [UUID]()
+    var selectedImage = ""
+    var selectedImageId : UUID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +86,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @objc func addButtonTapped() {
+        selectedImage = ""
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
@@ -95,6 +98,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return nameArray.count
+    }
+    
+    
+    // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini detailsVC'da gostermede kullanacagiz. Yani 1 VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailsVC" {
+            // DetailsVC'yi degisken gibi kaydederiz
+            let destinationVC = segue.destination as! DetailsVC
+            // AnaVC'de olusturdugumuz property'lerimizi DetailsVC'deki property'lere atadik
+            destinationVC.chosenImage = selectedImage
+            destinationVC.chosenImageId = selectedImageId
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Eger bir image'e tiklandiysa o isme tiklandigini belirtiriz
+        selectedImage = nameArray[indexPath.row]
+        selectedImageId = idArray[indexPath.row]
+        
+        performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
 }
