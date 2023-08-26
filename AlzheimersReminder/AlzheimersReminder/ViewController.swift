@@ -97,6 +97,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = nameArray[indexPath.row]
+        // Remove cell selection color
+        cell.selectionStyle = .none
         return cell
     }
     

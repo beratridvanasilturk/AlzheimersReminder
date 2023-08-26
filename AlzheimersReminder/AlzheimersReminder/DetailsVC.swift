@@ -25,6 +25,10 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        nameTextField.backgroundColor = .systemPurple.withAlphaComponent(0.7)
+        name2TextField.backgroundColor = .systemGreen
+        numberTextField.backgroundColor = .systemYellow
+        
         if chosenImage != "" {
             
             // Detail ekraninda daha oncesinde kaydedilen gorsele tiklandiginda save butonunu gorunmez yapar
@@ -85,6 +89,10 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                 saveButton.isHidden = false
                 // Ama tiklanamasin. Yani daga image secilmeden button aktif hale gelmesin, image secildikten sonra tiklanabilir yapacagiz: imagePickerController'de
                 saveButton.isEnabled = false
+                
+                nameTextField.text = ""
+                name2TextField.text = ""
+                numberTextField.text = ""
             }
         
         // Recognizer
@@ -133,6 +141,13 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     //MARK: - Actions
     // Core Data ile secilen image'i hafizaya atar
+    @IBAction func askMarkTapped(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Alert About Numbers!", message: "If you want to enter a phone number you can write without a space between numbers and without using a zero at the beginning.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
     @IBAction func saveButtonTapped(_ sender: Any) {
         
         // Bizim context'e ulasabilmemiz icin appdelegate'i bir degisken olarak atamamiz gerekir. Context: AppDelegate -> func saveContext
@@ -150,6 +165,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         newImage.setValue(UUID(), forKey: "id")
         if let num = Int(numberTextField.text!) {
             newImage.setValue(num, forKey: "number")
+            print("HAHAHA: \(num)")
         }
         // compressionQuality image'in kaydetme kalitesini duzenler, sıkıstırma islemidir.
         let data = imageView.image?.jpegData(compressionQuality: 0.5)
