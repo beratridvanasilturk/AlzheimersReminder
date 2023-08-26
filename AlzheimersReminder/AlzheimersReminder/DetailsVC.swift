@@ -14,6 +14,8 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var name2TextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
+    
     
     var chosenImage = ""
     var chosenImageId : UUID?
@@ -21,7 +23,10 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if chosenImage != "" {            
+        if chosenImage != "" {
+            
+            // Detail ekraninda daha oncesinde kaydedilen gorsele tiklandiginda save butonunu gorunmez yapar
+            saveButton.isHidden = true
             
             // Core Data'dan cekecegiz
             // Ilk olarak appDelegate'i cagirdik
@@ -46,9 +51,9 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                 let results = try context.fetch(fetchRequest)
                 
                 if results.count > 0 {
-                
+                    
                     for result in results as! [NSManagedObject] {
-                
+                        
                         if let name = result.value(forKey: "name") as? String {
                             nameTextField.text = name
                         }
@@ -64,7 +69,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                         }
                     }
                     
-                
+                    
                 }
                 
             } catch {
@@ -72,6 +77,14 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                 
             }
         }
+            // if chosenImage != "" Degilse yani
+            else {
+                // Save button gorunur olsun
+                saveButton.isHidden = false
+                // Ama tiklanamasin. Yani daga image secilmeden button aktif hale gelmesin, image secildikten sonra tiklanabilir yapacagiz: imagePickerController'de
+                saveButton.isEnabled = false
+            }
+        
         
         
         
@@ -113,6 +126,10 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // .editedImage yerine originalImage'i de kullanabilirdik. Genellikle ikisi kullanilir ama bu projede editi actigimiz icin editingImage daha saglikli olacaktir
         imageView.image = info[.editedImage] as? UIImage
+        
+        // Save button'u image secildikten sonra aktif hale getirdik
+        saveButton.isEnabled = true
+        
         self.dismiss(animated: true)
     }
     

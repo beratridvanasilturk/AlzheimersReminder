@@ -108,6 +108,7 @@
                         <outlet property="name2TextField" destination="wYQ-cA-gAe" id="Dh4-20-Cr8"/>
                         <outlet property="nameTextField" destination="ITI-G6-McW" id="bdU-Ot-GQC"/>
                         <outlet property="numberTextField" destination="qtX-U2-SPN" id="Afn-w2-cNT"/>
+                        <outlet property="saveButton" destination="4am-Bm-QD2" id="4lP-gh-Y0H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="41m-oE-8iO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
