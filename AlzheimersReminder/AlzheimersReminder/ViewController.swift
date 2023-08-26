@@ -10,24 +10,23 @@ import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-
+    //MARK: -Outlets
     @IBOutlet weak var tableView: UITableView!
-    
+    //MARK: -Variables
     var nameArray = [String]()
     var idArray = [UUID]()
     var selectedImage = ""
     var selectedImageId : UUID?
-    
+    //MARK: - Funcs
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-  
         tableView.dataSource = self
         tableView.delegate = self
         
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonTapped))
         
         getData()
-        
     }
     
     // DetailsVC'den NotCenter ile gozlemci ekleyerek DetailsVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
@@ -86,7 +85,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    
     @objc func addButtonTapped() {
         selectedImage = ""
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
@@ -101,7 +99,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel?.text = nameArray[indexPath.row]
         return cell
     }
-   
     
     // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini detailsVC'da gostermede kullanacagiz. Yani 1 VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,7 +118,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
-    
+    // Swipe to Delete
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             

@@ -10,16 +10,18 @@ import CoreData
 
 class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // MARK: -Outlets
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var name2TextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     
-    
+    //MARK: - Variables
     var chosenImage = ""
     var chosenImageId : UUID?
     
+    //MARK: - Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,9 +87,6 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                 saveButton.isEnabled = false
             }
         
-        
-        
-        
         // Recognizer
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -100,7 +99,6 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         imageView.addGestureRecognizer(imageTapRecognizer)
         
     }
-
     
     // Ui'da bosluga tiklayinca klavyeyi kapatma func
     @objc func hideKeyboard() {
@@ -133,6 +131,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         self.dismiss(animated: true)
     }
     
+    //MARK: - Actions
     // Core Data ile secilen image'i hafizaya atar
     @IBAction func saveButtonTapped(_ sender: Any) {
         
