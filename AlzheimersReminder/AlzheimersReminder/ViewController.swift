@@ -60,7 +60,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         // Context.fetch icin gerekli bir request class'i ve result protokolu. (documentasyondan ulasabiliriz cont.fetch'de gerekli oldugunu gormek icin)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AlzheimersReminder")
         // Core Data'nin cashe'dan okumamasi icin kullanilir, buyuk ve cok sayidaki veri saklamalarinda daha hizli geri donus almamiza olanak saglar
         //  True oldugunda (default hali truedur) tum veriler hata ateşlenene kadar satır önbelleğinde bulunur. Hata tetiklendiğinde, Core Data verileri satır önbelleğinden alır.
         fetchRequest.returnsObjectsAsFaults = false
@@ -141,7 +141,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let context = appDelegate.persistentContainer.viewContext
             
             // Fetch request'in olusturulma amaci ilgili veriyi cekip silmek icindir
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AlzheimersReminder")
             // Predicate kullanim amaci sadece 1 veriyi silmek isteyisimiz, o veriyi bulup cekip silecegiz.
             // Nereye tiklandiysa onun id'sini bulmamizi saglar
             let idString = idArray[indexPath.row].uuidString

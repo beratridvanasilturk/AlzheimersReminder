@@ -8,12 +8,17 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
 
-    @IBOutlet weak var locationNameTextField: UITextField!
+    var chosenLocationTitle = ""
+    var chosenLongitutePoint = Double()
+    var chosenLatitudePoint = Double()
     
-    @IBOutlet weak var commentTextField: UITextField!
+    @IBOutlet weak var locationTitleTextField: UITextField!
+    
+    @IBOutlet weak var locationSubtitleTextField: UITextField!
     //MARK: -Outlets
     @IBOutlet weak var mapView: MKMapView!
     // "CoreLocation Lokasyon Manageri" eklendi
@@ -22,6 +27,9 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
     //MARK: -Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+     
+        
         
         mapView.delegate = self
         locationManager.delegate = self
@@ -42,6 +50,8 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
         gestureRecognizer.minimumPressDuration = 3
         
         mapView.addGestureRecognizer(gestureRecognizer)
+        
+        
     }
     
     // choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
@@ -53,12 +63,16 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             // Dokunulan point'i coordinate'a cevirir
             let touchedCoordinate = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
             
+            // Core Dataya long ve latitude'u kaydetmek icin clasimizda birer degisken olusturup burdan aldigimiz long ve lat'leri o degiskene atar ve daha sonrasinda SaveButton'dan Core Data'ya aktaririz
+            chosenLatitudePoint = touchedCoordinate.latitude
+            chosenLongitutePoint = touchedCoordinate.longitude
+            
             // Olusturdugumuz pini nereye atamamiz gerektigini ayarliyoruz
             // Annotation: Pin
             let annotation = MKPointAnnotation()
             annotation.coordinate = touchedCoordinate
-            annotation.title = locationNameTextField.text
-            annotation.subtitle = commentTextField.text
+            annotation.title = locationTitleTextField.text
+            annotation.subtitle = locationSubtitleTextField.text
             
             self.mapView.addAnnotation(annotation)
             
@@ -81,4 +95,28 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             
         }
     }
+    @IBAction func saveButtonTapped(_ sender: Any) {
+    
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let newLocation = NSEntityDescription.insertNewObject(forEntityName: "AlzheimersReminder", into: context)
+        
+        // Attributes
+        
+        newLocation.setValue(locationTitleTextField, forKey: "mapTitle")
+        newLocation.setValue(locationSubtitleTextField, forKey: "mapSubtitle")
+        newLocation.setValue(chosenLatitudePoint, forKey: "mapLatitude")
+        newLocation.setValue(chosenLongitutePoint, forKey: "mapLongitude")
+        newLocation.setValue(UUID(), forKey: "mapId")
+        
+        do {
+            try context.save()
+            print("Core Data Saving Success")
+        } catch{
+            print("Core Data Saving Error")
+        }
+        
+    }
+    
 }
