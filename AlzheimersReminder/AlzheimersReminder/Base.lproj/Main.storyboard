@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--My Alzheimer's Antidote-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,17 +31,18 @@
                             <constraint firstItem="oJm-ia-0c9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zym-C0-KGr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="tlD-gX-pzx"/>
+                    <navigationItem key="navigationItem" title="My Alzheimer's Antidote" id="tlD-gX-pzx"/>
                     <connections>
                         <outlet property="tableView" destination="oJm-ia-0c9" id="9Vu-7P-1BO"/>
                         <segue destination="llf-hl-g5s" kind="show" identifier="toDetailsVC" id="x8i-yB-Dbf"/>
+                        <segue destination="SrQ-RB-QLz" kind="show" identifier="toLocationVC" id="wYX-Pj-gHQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1057.2519083969464" y="-27.464788732394368"/>
         </scene>
-        <!--DetailsVC-->
+        <!--Add Image-->
         <scene sceneID="cQR-BI-nak">
             <objects>
                 <viewController id="llf-hl-g5s" customClass="DetailsVC" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -129,7 +130,7 @@
                             <constraint firstItem="qtX-U2-SPN" firstAttribute="trailing" secondItem="wYQ-cA-gAe" secondAttribute="trailing" id="zgM-mQ-fQ7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mJW-cI-Lt5"/>
+                    <navigationItem key="navigationItem" title="Add Image" id="mJW-cI-Lt5"/>
                     <connections>
                         <outlet property="imageView" destination="6OL-a4-RgN" id="e19-77-i9K"/>
                         <outlet property="name2TextField" destination="wYQ-cA-gAe" id="Dh4-20-Cr8"/>
@@ -141,6 +142,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="41m-oE-8iO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1980.916030534351" y="-27.464788732394368"/>
+        </scene>
+        <!--Location View Controller-->
+        <scene sceneID="cLp-eo-wgJ">
+            <objects>
+                <viewController id="SrQ-RB-QLz" customClass="LocationViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bzG-fe-Zcs">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="MdQ-e6-Pwr"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QxU-A4-plq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MLg-IA-eFc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1056" y="775"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0Fn-gW-4G1">

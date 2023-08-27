@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EABDB3502A9ACB0F00889F7F /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDB34F2A9ACB0F00889F7F /* LocationViewController.swift */; };
 		EAE2CEDD2A98A5CF0015A887 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEDC2A98A5CF0015A887 /* AppDelegate.swift */; };
 		EAE2CEDF2A98A5CF0015A887 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */; };
 		EAE2CEE12A98A5CF0015A887 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEE02A98A5CF0015A887 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EABDB34F2A9ACB0F00889F7F /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		EAE2CED92A98A5CF0015A887 /* AlzheimersReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzheimersReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAE2CEDC2A98A5CF0015A887 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */,
 				EAE2CEE02A98A5CF0015A887 /* ViewController.swift */,
 				EAE2CEF32A98A7EC0015A887 /* DetailsVC.swift */,
+				EABDB34F2A9ACB0F00889F7F /* LocationViewController.swift */,
 				EAE2CEE22A98A5CF0015A887 /* Main.storyboard */,
 				EAE2CEE82A98A5D10015A887 /* Assets.xcassets */,
 				EAE2CEEA2A98A5D10015A887 /* LaunchScreen.storyboard */,
@@ -147,6 +150,7 @@
 				EAE2CEE12A98A5CF0015A887 /* ViewController.swift in Sources */,
 				EAE2CEE72A98A5CF0015A887 /* AlzheimersReminder.xcdatamodeld in Sources */,
 				EAE2CEDD2A98A5CF0015A887 /* AppDelegate.swift in Sources */,
+				EABDB3502A9ACB0F00889F7F /* LocationViewController.swift in Sources */,
 				EAE2CEDF2A98A5CF0015A887 /* SceneDelegate.swift in Sources */,
 				EAE2CEF42A98A7EC0015A887 /* DetailsVC.swift in Sources */,
 			);

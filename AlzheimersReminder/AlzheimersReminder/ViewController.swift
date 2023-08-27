@@ -24,6 +24,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.delegate = self
         
+        // FIXME: - Eger Store'a atarken button konumu sebebiyle uygulama ret yerse ui'da farkli bir konuma button olusturarak segue yapilmalidir. Buyuk ihtimalle button konumu itibariyle AppStore icin onaydan gecemeyecektir.
+        // Add Location Button
+        navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.search, target: self, action: #selector(locationButtonTapped))
+        
+        // Add Image Button
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonTapped))
         
         getData()
@@ -37,6 +42,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
     
     }
+    
+    @objc func locationButtonTapped() {
+        
+        performSegue(withIdentifier: "toLocationVC", sender: nil)
+        
+    }
+    
     
     // Core Data'dan Veri cekmede kullanilir
     @objc func getData() {
@@ -84,7 +96,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
     }
-    
+   
     @objc func addButtonTapped() {
         selectedImage = ""
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
