@@ -153,27 +153,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bwV-P7-dk2">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="284" width="393" height="534"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="534" id="xtp-oG-Npt"/>
+                                </constraints>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Loction Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PY6-pT-O9k">
+                                <rect key="frame" x="16" y="103" width="361" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Coment" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmY-KO-TSY">
+                                <rect key="frame" x="16" y="145" width="361" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MdQ-e6-Pwr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="bwV-P7-dk2" firstAttribute="leading" secondItem="MdQ-e6-Pwr" secondAttribute="leading" id="UCm-ks-EkJ"/>
-                            <constraint firstItem="bwV-P7-dk2" firstAttribute="top" secondItem="MdQ-e6-Pwr" secondAttribute="top" id="cBk-JD-kRs"/>
-                            <constraint firstItem="MdQ-e6-Pwr" firstAttribute="trailing" secondItem="bwV-P7-dk2" secondAttribute="trailing" id="gy7-rR-sRw"/>
-                            <constraint firstItem="MdQ-e6-Pwr" firstAttribute="bottom" secondItem="bwV-P7-dk2" secondAttribute="bottom" id="u75-QE-aUm"/>
+                            <constraint firstItem="bwV-P7-dk2" firstAttribute="leading" secondItem="MdQ-e6-Pwr" secondAttribute="leading" id="Gdd-88-Jv9"/>
+                            <constraint firstItem="fmY-KO-TSY" firstAttribute="top" secondItem="PY6-pT-O9k" secondAttribute="bottom" constant="8" id="Kql-8O-Qom"/>
+                            <constraint firstItem="PY6-pT-O9k" firstAttribute="trailing" secondItem="bzG-fe-Zcs" secondAttribute="trailingMargin" id="O1Y-ZJ-Yfc"/>
+                            <constraint firstItem="PY6-pT-O9k" firstAttribute="top" secondItem="MdQ-e6-Pwr" secondAttribute="top" id="UgM-P9-FJo"/>
+                            <constraint firstItem="fmY-KO-TSY" firstAttribute="centerX" secondItem="bwV-P7-dk2" secondAttribute="centerX" id="Zg5-TM-20Q"/>
+                            <constraint firstItem="PY6-pT-O9k" firstAttribute="leading" secondItem="bzG-fe-Zcs" secondAttribute="leadingMargin" id="foj-R1-cMQ"/>
+                            <constraint firstItem="PY6-pT-O9k" firstAttribute="trailing" secondItem="fmY-KO-TSY" secondAttribute="trailing" id="hnS-AX-us1"/>
+                            <constraint firstItem="PY6-pT-O9k" firstAttribute="leading" secondItem="fmY-KO-TSY" secondAttribute="leading" id="sEX-U1-Erg"/>
+                            <constraint firstItem="bwV-P7-dk2" firstAttribute="bottom" secondItem="MdQ-e6-Pwr" secondAttribute="bottom" id="xmC-dC-aWM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QxU-A4-plq"/>
                     <connections>
+                        <outlet property="commentTextField" destination="fmY-KO-TSY" id="DL4-Hb-2GT"/>
+                        <outlet property="locationNameTextField" destination="PY6-pT-O9k" id="VHj-Ux-Bgp"/>
                         <outlet property="mapView" destination="bwV-P7-dk2" id="coO-sv-6sT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MLg-IA-eFc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1056" y="775"/>
+            <point key="canvasLocation" x="1052.6717557251909" y="774.64788732394368"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0Fn-gW-4G1">

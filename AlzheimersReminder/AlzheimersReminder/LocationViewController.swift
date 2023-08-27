@@ -10,6 +10,10 @@ import MapKit
 import CoreLocation
 
 class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
+
+    @IBOutlet weak var locationNameTextField: UITextField!
+    
+    @IBOutlet weak var commentTextField: UITextField!
     //MARK: -Outlets
     @IBOutlet weak var mapView: MKMapView!
     // "CoreLocation Lokasyon Manageri" eklendi
@@ -53,8 +57,8 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             // Annotation: Pin
             let annotation = MKPointAnnotation()
             annotation.coordinate = touchedCoordinate
-            annotation.title = "New Annotation"
-            annotation.subtitle = "Important Location"
+            annotation.title = locationNameTextField.text
+            annotation.subtitle = commentTextField.text
             
             self.mapView.addAnnotation(annotation)
             
