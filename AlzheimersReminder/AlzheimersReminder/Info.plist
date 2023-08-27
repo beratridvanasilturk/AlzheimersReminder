@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>The Alzheimer&apos;s Reminder App Need To Access Your Location Allways For Your Safety</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The Alzheimer&apos;s Reminder App Need Access Your Location Allways For Your Safety</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
