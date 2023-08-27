@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -150,10 +151,25 @@
                     <view key="view" contentMode="scaleToFill" id="bzG-fe-Zcs">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bwV-P7-dk2">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="MdQ-e6-Pwr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bwV-P7-dk2" firstAttribute="leading" secondItem="MdQ-e6-Pwr" secondAttribute="leading" id="UCm-ks-EkJ"/>
+                            <constraint firstItem="bwV-P7-dk2" firstAttribute="top" secondItem="MdQ-e6-Pwr" secondAttribute="top" id="cBk-JD-kRs"/>
+                            <constraint firstItem="MdQ-e6-Pwr" firstAttribute="trailing" secondItem="bwV-P7-dk2" secondAttribute="trailing" id="gy7-rR-sRw"/>
+                            <constraint firstItem="MdQ-e6-Pwr" firstAttribute="bottom" secondItem="bwV-P7-dk2" secondAttribute="bottom" id="u75-QE-aUm"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QxU-A4-plq"/>
+                    <connections>
+                        <outlet property="mapView" destination="bwV-P7-dk2" id="coO-sv-6sT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MLg-IA-eFc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
