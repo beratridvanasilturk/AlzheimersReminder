@@ -13,6 +13,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK: -Outlets
     @IBOutlet weak var tableView: UITableView!
     //MARK: -Variables
+    var titleArray = [String]()
+    var subtitleArray = [String]()
+    
     var nameArray = [String]()
     var idArray = [UUID]()
     var selectedImage = ""
@@ -40,16 +43,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // newData mesajini gordugunde getData'yi cagirir
         // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
         NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(getDataFromLocation), name: NSNotification.Name(rawValue: "newDataFromLocation"), object: nil)
     
     }
-    
     @objc func locationButtonTapped() {
-        
         performSegue(withIdentifier: "toLocationVC", sender: nil)
-        
     }
     
-    
+    @objc func getDataFromLocation() {
+     
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AlzheimersReminder")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            if results.count > 0 {
+                for result in results as! [NSManagedObject] {
+                    if let title = result.value(forKey: "mapTitle") as? String {
+                        self.titleArray.append(title)
+                    }
+                    
+                    if let subtitle = result.value(forKey: "mapSubtitle") as? String {
+                        self.subtitleArray.append(subtitle)
+                    }
+//
+//                    if let id = result.value(forKey: "mapSubtitle") as? UUID {
+//                        self.idArray.append(id)
+//                    }
+                    
+                    // Gelen yeni veri sonrasi table view guncellenir
+                    self.tableView.reloadData()
+                }
+            }
+                    
+        } catch {
+            print("Error: Data Fetch Resulst in ViewController")
+        }
+        
+    }
+   
     // Core Data'dan Veri cekmede kullanilir
     @objc func getData() {
         

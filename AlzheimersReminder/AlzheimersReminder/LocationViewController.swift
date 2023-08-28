@@ -104,8 +104,8 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
         
         // Attributes
         
-        newLocation.setValue(locationTitleTextField, forKey: "mapTitle")
-        newLocation.setValue(locationSubtitleTextField, forKey: "mapSubtitle")
+        newLocation.setValue(locationTitleTextField.text, forKey: "mapTitle")
+        newLocation.setValue(locationSubtitleTextField.text, forKey: "mapSubtitle")
         newLocation.setValue(chosenLatitudePoint, forKey: "mapLatitude")
         newLocation.setValue(chosenLongitutePoint, forKey: "mapLongitude")
         newLocation.setValue(UUID(), forKey: "mapId")
@@ -117,6 +117,11 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             print("Core Data Saving Error")
         }
         
+        NotificationCenter.default.post(name: NSNotification.Name("newDataFromLocation"), object: nil)
+        
+        self.navigationController?.popViewController(animated: true)
+        
+        print("LOCATION CORE DATA SAVING BASARILI !!")
     }
     
 }
