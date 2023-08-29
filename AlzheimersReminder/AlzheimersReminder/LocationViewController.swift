@@ -104,7 +104,7 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
     
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        
+        // Seperated Entity Names with Image View Cont (DetailVC)
         let newLocation = NSEntityDescription.insertNewObject(forEntityName: "Locations", into: context)
         
         // Attributes
