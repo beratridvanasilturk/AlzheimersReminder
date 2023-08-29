@@ -159,7 +159,10 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         // MARK: TRUE
         // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
         // CLLocation enlem ve boylam icerir
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Sadece Secilen Baslik Bos Ise Haritayi Gunceller, Boylelikle View DidLoad'daki Core Data'dan Alinan Annotation Gosterilirken Bir Yandan Da Hareketle Konumun Degismesi Engellenir
+        if selectedTitle == "" {
             
             // Kullanicinin anlik lokasyonunu aliriz
             let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
@@ -173,7 +176,8 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             mapView.setRegion(region, animated: true)
             
         }
-
+    }
+    
 // choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
 // MARK: TRUE
     @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
