@@ -76,10 +76,10 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                         self.locationArray.append(name)
                     }
                     
-                    if let name2 = result.value(forKey: "subtitle") as? String {
-                        self.locationArray.append(name2)
-                    }
-                    
+//                    if let name2 = result.value(forKey: "subtitle") as? String {
+//                        self.locationArray.append(name2)
+//                    }
+//
                     if let id2 = result.value(forKey: "id2") as? UUID {
                         self.idArray.append(id2)
                     }
