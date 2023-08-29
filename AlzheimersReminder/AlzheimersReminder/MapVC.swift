@@ -16,9 +16,16 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
     var chosenLongitutePoint = Double()
     var chosenLatitudePoint = Double()
     
-    var chosenLocationId : UUID?
-    var chosenLocation = ""
     
+    // Cell secildikten sonra MapVC'de secilen cell'in icerigini gostermek icin kullanilir
+    var selectedTitle = ""
+    var selectedTitleId : UUID?
+    
+    // Annotation'u Cora Data'dan Cekip Map'da Gostermek Icin Kullanacagiz
+    var annotationTitle = ""
+    var annotationSubtitle = ""
+    var annotationLatitute = Double()
+    var annotationLongitute = Double()
     
   
     
@@ -33,20 +40,34 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
     //MARK: -Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-        if chosenLocation != "" {
-            mapView.delegate = self
-            locationManager.delegate = self
-            // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
-            // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
-            // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            // Kullanicidan izin istenir
-            // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
-            locationManager.requestWhenInUseAuthorization()
-            // Kullanicinin lokasyonu alinmaya baslanir.
-            locationManager.startUpdatingLocation()
+        
+        
+        mapView.delegate = self
+        locationManager.delegate = self
+        // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
+        // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
+        // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // Kullanicidan izin istenir
+        // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
+        locationManager.requestWhenInUseAuthorization()
+        // Kullanicinin lokasyonu alinmaya baslanir.
+        locationManager.startUpdatingLocation()
+        
+        
+        // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
+        
+        // Kac saniye basildiktan sonra pin atacagimizi ayarlariz
+        gestureRecognizer.minimumPressDuration = 1
+        
+        mapView.addGestureRecognizer(gestureRecognizer)
+        
+        
+        if selectedTitle != "" {
             
-            // Core Data'dan cekecegiz
+            // Core Data'dan Annotation'u Yani Pin'i cekecegiz
+            
             // Ilk olarak appDelegate'i cagirdik
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             // Context'i (baglam) olusturduk
@@ -55,8 +76,8 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
             
-            // Filtreleme islemi icin
-            let idString = chosenLocationId?.uuidString
+            // TIKLANAN YERIN ID'SINI VERIR
+            let idString = selectedTitleId?.uuidString
             // Predicate bizim yazdigimiz kosulu bulup bize fetch eder
             // id = %@ : id'si virgulden sonraki argumana (idString'e) esit olan seyi bul anlamindadir
             // id yerine name getirmesini isteseydik ..format: "name = %@", self.chosenImage) yazardik. Biz ayni name'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
@@ -73,10 +94,36 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
                     for result in results as! [NSManagedObject] {
                         
                         if let title = result.value(forKey: "title") as? String {
-                            locationTitleTextField.text = title
-                        }
-                        if let subtitle = result.value(forKey: "subtitle") as? String {
-                            locationSubtitleTextField.text = subtitle
+                            annotationTitle = title
+                            
+                            if let subtitle = result.value(forKey: "subtitle") as? String {
+                                annotationSubtitle = subtitle
+                                
+                                if let latitude = result.value(forKey: "latitute") as? Double {
+                                    annotationLatitute = latitude
+                                    
+                                     if let longitute = result.value(forKey: "longitute") as? Double{
+                                         annotationLongitute = longitute
+                                         
+                                         // Eger tum degerler olduysa artik annotation'u olusturabiliriz
+                                         
+                                         let annotation = MKPointAnnotation()
+                                         annotation.title = annotationTitle
+                                         annotation.subtitle = annotationSubtitle
+                                         
+                                         let coordinate = CLLocationCoordinate2D(latitude: annotationLatitute, longitude: annotationLongitute)
+                                         annotation.coordinate = coordinate
+                                         
+                                         mapView.addAnnotation(annotation)
+                                         
+                                         locationTitleTextField.text = annotationTitle
+                                         locationSubtitleTextField.text = annotationSubtitle
+                                         
+                                         
+                                         // Core Data'dan Annotation Pin Cekme Islemi Sonuclanir
+                                     }
+                                }
+                            }
                         }
                     }
                 }
@@ -94,15 +141,7 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             }
             
             
-        // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
-        
-        // Kac saniye basildiktan sonra pin atacagimizi ayarlariz
-        gestureRecognizer.minimumPressDuration = 1
-        
-        mapView.addGestureRecognizer(gestureRecognizer)
-        
-            
+      
 
     }
     

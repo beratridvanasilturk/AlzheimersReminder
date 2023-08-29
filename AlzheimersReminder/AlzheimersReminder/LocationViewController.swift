@@ -15,9 +15,12 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: -Variables
     var locationArray = [String]()
     var idArray = [UUID]()
-    var selectedLocation = ""
-    var selectedLocationId : UUID?
     
+    
+    var chosenLocationTitleId : UUID?
+    var chosenLocationTitle = ""
+    
+
     //MARK: - Funcs
     override func viewDidLoad() {
         
@@ -106,16 +109,18 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             // DetailsVC'yi degisken gibi kaydederiz
             let destinationVC = segue.destination as! MapVC
             // AnaVC'de olusturdugumuz property'lerimizi DetailsVC'deki property'lere atadik
-            destinationVC.chosenLocation = selectedLocation
-            destinationVC.chosenLocationId = selectedLocationId
+            destinationVC.selectedTitle = chosenLocationTitle
+            destinationVC.selectedTitleId = chosenLocationTitleId
+            
+            // LOCVC 'den MAPVC'ye Data Aktarimi Gerceklesmis Olur
         }
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Eger bir image'e tiklandiysa o isme tiklandigini belirtiriz
-        selectedLocation = locationArray[indexPath.row]
-        selectedLocationId = idArray[indexPath.row]
+        chosenLocationTitle = locationArray[indexPath.row]
+        chosenLocationTitleId = idArray[indexPath.row]
         
         performSegue(withIdentifier: "toMapView", sender: nil)
     }
@@ -142,7 +147,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func addLocationTapped(_ sender: Any) {
         
-        selectedLocation = ""
+        chosenLocationTitle = ""
         performSegue(withIdentifier: "toMapView", sender: nil)
         
     }
