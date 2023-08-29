@@ -31,83 +31,32 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if chosenLocation != "" {
-            // Core Data'dan cekecegiz
-            // Ilk olarak appDelegate'i cagirdik
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            // Context'i (baglam) olusturduk
-            let context = appDelegate.persistentContainer.viewContext
-            
-            // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AlzheimersReminder")
-            
-            // Filtreleme islemi icin
-            let idString = chosenLocationId?.uuidString
-            // Predicate bizim yazdigimiz kosulu bulup bize fetch eder
-            // id = %@ : id'si virgulden sonraki argumana (idString'e) esit olan seyi bul anlamindadir
-            // id yerine name getirmesini isteseydik ..format: "name = %@", self.chosenImage) yazardik. Biz ayni name'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
-            fetchRequest.predicate = NSPredicate(format: "mapId = %@", idString!)
-            
-            // Verimi artirmak icin cache datalari duzenler
-            fetchRequest.returnsObjectsAsFaults = false
-            
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                if results.count > 0 {
-                    
-                    for result in results as! [NSManagedObject] {
-                        
-                        if let title = result.value(forKey: "titleMap") as? String {
-                            locationTitleTextField.text = title
-                        }
-                        if let subtitle = result.value(forKey: "subtitleMap") as? String {
-                            locationSubtitleTextField.text = subtitle
-                        }
-                        if let longitude = result.value(forKey: "mapLongitude") as? Double {
-                            chosenLongitutePoint = longitude
-                        }
-                        if let latitude = result.value(forKey: "mapLatitude") as? Double {
-                            chosenLatitudePoint = latitude
-                        }
-                    }
-                    
-                    
-                }
-                
-            } catch {
-                print("Error do-catch in DetailsVC")
-                
-            }
-            
-            
-            
-            mapView.delegate = self
-            locationManager.delegate = self
-            // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
-            // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
-            // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            // Kullanicidan izin istenir
-            // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
-            locationManager.requestWhenInUseAuthorization()
-            // Kullanicinin lokasyonu alinmaya baslanir.
-            locationManager.startUpdatingLocation()
-            
-            // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
-            let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
-            
-            // Kac saniye basildiktan sonra pin atacagimizi ayarlariz
-            gestureRecognizer.minimumPressDuration = 1
-            
-            mapView.addGestureRecognizer(gestureRecognizer)
-            
-            
-        }
+        mapView.delegate = self
+        locationManager.delegate = self
+        // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
+        // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
+        // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // Kullanicidan izin istenir
+        // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
+        locationManager.requestWhenInUseAuthorization()
+        // Kullanicinin lokasyonu alinmaya baslanir.
+        locationManager.startUpdatingLocation()
         
+        // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
+        
+        // Kac saniye basildiktan sonra pin atacagimizi ayarlariz
+        gestureRecognizer.minimumPressDuration = 1
+        
+        mapView.addGestureRecognizer(gestureRecognizer)
+        
+            
+
     }
     
     // choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
+    // MARK: TRUE
     @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
         // Gesture Recognizer baslama durumunu kontrol eder
         if gestureRecognizer.state == .began {
@@ -117,8 +66,8 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             let touchedCoordinate = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
             
             // Core Dataya long ve latitude'u kaydetmek icin clasimizda birer degisken olusturup burdan aldigimiz long ve lat'leri o degiskene atar ve daha sonrasinda SaveButton'dan Core Data'ya aktaririz
-            chosenLatitudePoint = touchedCoordinate.latitude
-            chosenLongitutePoint = touchedCoordinate.longitude
+//            chosenLatitudePoint = touchedCoordinate.latitude
+//            chosenLongitutePoint = touchedCoordinate.longitude
             
             // Olusturdugumuz pini nereye atamamiz gerektigini ayarliyoruz
             // Annotation: Pin
@@ -131,6 +80,7 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             
         }
         
+        // MARK: TRUE
         // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
         // CLLocation enlem ve boylam icerir
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -148,17 +98,19 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             
         }
     }
+    
+    
     @IBAction func saveButtonTapped(_ sender: Any) {
     
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
-        let newLocation = NSEntityDescription.insertNewObject(forEntityName: "AlzheimersReminder", into: context)
+        let newLocation = NSEntityDescription.insertNewObject(forEntityName: "Locations", into: context)
         
         // Attributes
         
-        newLocation.setValue(locationTitleTextField.text, forKey: "mapTitle")
-        newLocation.setValue(locationSubtitleTextField.text, forKey: "mapSubtitle")
+        newLocation.setValue(locationTitleTextField, forKey: "mapTitle")
+        newLocation.setValue(locationSubtitleTextField, forKey: "mapSubtitle")
         newLocation.setValue(chosenLatitudePoint, forKey: "mapLatitude")
         newLocation.setValue(chosenLongitutePoint, forKey: "mapLongitude")
         newLocation.setValue(UUID(), forKey: "mapId")
@@ -170,11 +122,6 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             print("Core Data Saving Error")
         }
         
-        NotificationCenter.default.post(name: NSNotification.Name("newDataFromLocation"), object: nil)
-        
-        self.navigationController?.popViewController(animated: true)
-        
-        print("LOCATION CORE DATA SAVING BASARILI !!")
     }
     
 }
