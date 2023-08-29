@@ -15,8 +15,8 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: -Variables
     var locationArray = [String]()
     var idArray = [UUID]()
-    var selectedImage = ""
-    var selectedImageId : UUID?
+    var selectedLocation = ""
+    var selectedLocationId : UUID?
     
     //MARK: - Funcs
     override func viewDidLoad() {
@@ -25,11 +25,8 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         tableView.delegate = self
 
-    
-        // Add Location Button
-        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addLocationTapped))
-        
-        getData()
+  
+        getData2()
     }
     
     
@@ -39,7 +36,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         
         // newData mesajini gordugunde getData'yi cagirir
         // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
-        NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getData2), name: NSNotification.Name(rawValue: "newData2"), object: nil)
     
     }
     
@@ -49,7 +46,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // Core Data'dan Veri cekmede kullanilir
-    @objc func getData() {
+    @objc func getData2() {
         
         // Verileri viewWillAppear'da notCenter ile cekerken burada temizlemeden cifter cekme islemi yapiyor, bunun onune gecmek icin array'lari basta kaldiriyoruz
         locationArray.removeAll()
@@ -83,8 +80,8 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                         self.locationArray.append(name2)
                     }
                     
-                    if let id = result.value(forKey: "id2") as? UUID {
-                        self.idArray.append(id)
+                    if let id2 = result.value(forKey: "id2") as? UUID {
+                        self.idArray.append(id2)
                     }
                     
                     // Gelen yeni veri sonrasi table view guncellenir
@@ -109,15 +106,15 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             // DetailsVC'yi degisken gibi kaydederiz
             let destinationVC = segue.destination as! MapVC
             // AnaVC'de olusturdugumuz property'lerimizi DetailsVC'deki property'lere atadik
-            destinationVC.chosenLocation = selectedImage
-            destinationVC.chosenLocationId = selectedImageId
+            destinationVC.chosenLocation = selectedLocation
+            destinationVC.chosenLocationId = selectedLocationId
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Eger bir image'e tiklandiysa o isme tiklandigini belirtiriz
-        selectedImage = locationArray[indexPath.row]
-        selectedImageId = idArray[indexPath.row]
+        selectedLocation = locationArray[indexPath.row]
+        selectedLocationId = idArray[indexPath.row]
         
         performSegue(withIdentifier: "toMapView", sender: nil)
     }
@@ -139,14 +136,10 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    @objc func addLocationTapped() {
-        
-        performSegue(withIdentifier: "toMapView", sender: nil)
-        
-    }
+
     
     
-    @IBAction func addLocationTapped2r(_ sender: Any) {
+    @IBAction func addLocationTapped(_ sender: Any) {
         
         
         performSegue(withIdentifier: "toMapView", sender: nil)

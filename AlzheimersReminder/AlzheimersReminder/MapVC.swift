@@ -133,6 +133,14 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         } catch{
             print("Core Data Saving Error")
         }
+        // Observer'lar icin (view controller arasi) mesaj yollama tool'udur,
+        // Amacimiz eklenen image'i UITableView'de guncellemek icin notcenter kullanmaktir.
+        // Burdan projemizdeki ViewController'a bir mesaj gondeririz (name: String ile) ve VC DetailVC'den aldigi mesajla ne yapmasi gerektigini anlar (biz projemizde get data func'u cagiracagiz) iki VC arasi bir cesit mektuplasma gibi dusunulebilir
+        // Notification Center'a VC'da ViewWillAppear icerisinde cagirmaliyiz ki her vc'a donusde bu methodumuz tetiklensin, didLoad'da bunu basaramayiz.
+        NotificationCenter.default.post(name: NSNotification.Name("newData2"), object: nil)
+        
+        // Bir onceki VC'a gecis icin kullanilir
+        self.navigationController?.popViewController(animated: true)
         
     }
     

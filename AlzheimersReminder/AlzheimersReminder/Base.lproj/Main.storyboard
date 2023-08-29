@@ -67,7 +67,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aXl-3b-7y8">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="XpW-n7-ZSc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="XpW-n7-ZSc">
                             <connections>
                                 <action selector="addLocationTapped:" destination="mkI-nJ-YOd" id="DMB-iU-sH9"/>
                                 <segue destination="SrQ-RB-QLz" kind="show" identifier="toMapView" id="WTt-sh-lSD"/>
