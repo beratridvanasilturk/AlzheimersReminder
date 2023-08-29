@@ -41,7 +41,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             let context = appDelegate.persistentContainer.viewContext
             
             // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MyEntity")
             
             // Filtreleme islemi icin
             let idString = chosenImageId?.uuidString
@@ -156,7 +156,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         // persistentContainer.viewContext ile AppDelegate'deki supporting context'leri kullanabilir hale geliriz
         let context = appDelegate.persistentContainer.viewContext
         // Entity name'i AlzheimersReminder.xcdatamodeld dosyasindaki basliktan aldik, veriyi nereye kaydececegimizi belirlemek icin kullandik NSEntityDescription.insertObj'yi
-        let newImage = NSEntityDescription.insertNewObject(forEntityName: "Images", into: context)
+        let newImage = NSEntityDescription.insertNewObject(forEntityName: "MyEntity", into: context)
         
         // Attributes
         // Attributeleri AlzheimersReminder.xcdatamodeld dosyasinda olusturdugumuz projemizde olmasini istedigimiz ozelliklerden aldik ki ona gore kaydetmek istedigimiz tum her seyi unique sekilde save edebilelim.

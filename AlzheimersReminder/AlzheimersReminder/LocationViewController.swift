@@ -55,31 +55,7 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
 
     }
     
-    // choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
-    // MARK: TRUE
-    @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
-        // Gesture Recognizer baslama durumunu kontrol eder
-        if gestureRecognizer.state == .began {
-            // Toucked point kullanicinin dokunmus oldugu noktanin lokasyonunu almak icin kullanilir
-            let touchedPoint = gestureRecognizer.location(in: self.mapView)
-            // Dokunulan point'i coordinate'a cevirir
-            let touchedCoordinate = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
-            
-            // Core Dataya long ve latitude'u kaydetmek icin clasimizda birer degisken olusturup burdan aldigimiz long ve lat'leri o degiskene atar ve daha sonrasinda SaveButton'dan Core Data'ya aktaririz
-//            chosenLatitudePoint = touchedCoordinate.latitude
-//            chosenLongitutePoint = touchedCoordinate.longitude
-            
-            // Olusturdugumuz pini nereye atamamiz gerektigini ayarliyoruz
-            // Annotation: Pin
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = touchedCoordinate
-            annotation.title = locationTitleTextField.text
-            annotation.subtitle = locationSubtitleTextField.text
-            
-            self.mapView.addAnnotation(annotation)
-            
-        }
-        
+
         // MARK: TRUE
         // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
         // CLLocation enlem ve boylam icerir
@@ -97,7 +73,35 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
             mapView.setRegion(region, animated: true)
             
         }
+
+// choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
+// MARK: TRUE
+    @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
+        // Gesture Recognizer baslama durumunu kontrol eder
+        if gestureRecognizer.state == .began {
+            // Toucked point kullanicinin dokunmus oldugu noktanin lokasyonunu almak icin kullanilir
+            let touchedPoint = gestureRecognizer.location(in: self.mapView)
+            // Dokunulan point'i coordinate'a cevirir
+            let touchedCoordinate = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
+            
+            // CORE DATA'YA ENLEM BOYLAM ATAMAK ICIN DATAYI BURDAN CEKTIK
+            // Core Dataya long ve latitude'u kaydetmek icin clasimizda birer degisken olusturup burdan aldigimiz long ve lat'leri o degiskene atar ve daha sonrasinda SaveButton'dan Core Data'ya aktaririz
+            // Save Button Tapped ' da Attribute'lerde Core Data'ya Latitude ve Longitute Eklemek Ici Kullandik
+            chosenLatitudePoint = touchedCoordinate.latitude
+            chosenLongitutePoint = touchedCoordinate.longitude
+            
+            // Olusturdugumuz pini nereye atamamiz gerektigini ayarliyoruz
+            // Annotation: Pin
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = touchedCoordinate
+            annotation.title = locationTitleTextField.text
+            annotation.subtitle = locationSubtitleTextField.text
+            
+            self.mapView.addAnnotation(annotation)
+            
+        }
     }
+    
     
     
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -105,15 +109,20 @@ class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationMana
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         // Seperated Entity Names with Image View Cont (DetailVC)
-        let newLocation = NSEntityDescription.insertNewObject(forEntityName: "Locations", into: context)
+        let newLocation = NSEntityDescription.insertNewObject(forEntityName: "MyEntity", into: context)
+        
         
         // Attributes
         
-        newLocation.setValue(locationTitleTextField, forKey: "mapTitle")
-        newLocation.setValue(locationSubtitleTextField, forKey: "mapSubtitle")
-        newLocation.setValue(chosenLatitudePoint, forKey: "mapLatitude")
-        newLocation.setValue(chosenLongitutePoint, forKey: "mapLongitude")
-        newLocation.setValue(UUID(), forKey: "mapId")
+        newLocation.setValue(locationTitleTextField.text, forKey: "title")
+        newLocation.setValue(locationSubtitleTextField.text, forKey: "subtitle")
+        
+        // Enlem ve boylami chose location func'tan aliriz direkt
+        newLocation.setValue(chosenLatitudePoint, forKey: "latitude")
+        newLocation.setValue(chosenLongitutePoint, forKey: "longitute")
+        
+        newLocation.setValue(UUID(), forKey: "id2")
+      
         
         do {
             try context.save()
