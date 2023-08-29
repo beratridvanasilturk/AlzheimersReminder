@@ -206,7 +206,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MLg-IA-eFc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1589" y="717"/>
+            <point key="canvasLocation" x="1953" y="721"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0Fn-gW-4G1">
