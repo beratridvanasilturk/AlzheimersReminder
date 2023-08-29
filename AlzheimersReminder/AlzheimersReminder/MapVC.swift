@@ -94,9 +94,6 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             }
             
             
-            
-            
-            
         // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
         
