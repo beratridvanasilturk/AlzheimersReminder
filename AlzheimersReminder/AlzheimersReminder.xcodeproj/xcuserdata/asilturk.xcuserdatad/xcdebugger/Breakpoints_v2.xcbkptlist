@@ -14,10 +14,10 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "184835DB-F300-404A-A4D2-67BA172F35DA - 1ec8368897702613"
@@ -49,6 +49,36 @@
                   endingLineNumber = "130"
                   offsetFromSymbolStart = "2970">
                </Location>
+               <Location
+                  uuid = "184835DB-F300-404A-A4D2-67BA172F35DA - 7a696a9a9564d294"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "154">
+               </Location>
+               <Location
+                  uuid = "184835DB-F300-404A-A4D2-67BA172F35DA - 7a696a9a9564dd52"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "136"
+                  endingLineNumber = "136"
+                  offsetFromSymbolStart = "154">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -62,10 +92,57 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "LocationViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "4E912F3C-4432-486D-8FCA-FF594DB69A63 - 1ec8368897702651"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.saveButtonTapped(Any) -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "2306">
+               </Location>
+               <Location
+                  uuid = "4E912F3C-4432-486D-8FCA-FF594DB69A63 - 7a696a9a9564d2f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "133"
+                  endingLineNumber = "133"
+                  offsetFromSymbolStart = "126">
+               </Location>
+               <Location
+                  uuid = "4E912F3C-4432-486D-8FCA-FF594DB69A63 - 7a696a9a9564d2b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "126">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -78,10 +155,10 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "addLocationTapped()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "947DF0D9-C53B-429A-A802-E20FA79551C1 - aa2edc62aa595525"
@@ -128,6 +205,36 @@
                   endingLineNumber = "117"
                   offsetFromSymbolStart = "637">
                </Location>
+               <Location
+                  uuid = "947DF0D9-C53B-429A-A802-E20FA79551C1 - f6bbbcff69b3b31e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.addLocationTapped() -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "300">
+               </Location>
+               <Location
+                  uuid = "947DF0D9-C53B-429A-A802-E20FA79551C1 - f6bbbcff69b3b35c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.addLocationTapped() -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "146"
+                  endingLineNumber = "146"
+                  offsetFromSymbolStart = "300">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -141,10 +248,10 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "addLocationTapped()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "DBB72EC5-0B5E-475C-AF85-01712341FD0B - aa2edc62aa595525"
@@ -191,6 +298,36 @@
                   endingLineNumber = "117"
                   offsetFromSymbolStart = "637">
                </Location>
+               <Location
+                  uuid = "DBB72EC5-0B5E-475C-AF85-01712341FD0B - f6bbbcff69b3b2d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.addLocationTapped() -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "142"
+                  endingLineNumber = "142"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  uuid = "DBB72EC5-0B5E-475C-AF85-01712341FD0B - f6bbbcff69b3b31e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.addLocationTapped() -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "35">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -204,10 +341,57 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "LocationViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "358E840B-CE01-4112-99A0-2F5AF18AB9C7 - 1ec83688977025a1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.saveButtonTapped(Any) -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "112"
+                  endingLineNumber = "112"
+                  offsetFromSymbolStart = "487">
+               </Location>
+               <Location
+                  uuid = "358E840B-CE01-4112-99A0-2F5AF18AB9C7 - f6bbbcff69b3b2d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.addLocationTapped() -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "142"
+                  endingLineNumber = "142"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  uuid = "358E840B-CE01-4112-99A0-2F5AF18AB9C7 - f6bbbcff69b3b31e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.addLocationTapped() -&gt; ()"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "35">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -220,10 +404,42 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "33BDA781-52C7-459B-8F7E-C4B260563842 - 7a696a9a9564d2f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "133"
+                  endingLineNumber = "133"
+                  offsetFromSymbolStart = "126">
+               </Location>
+               <Location
+                  uuid = "33BDA781-52C7-459B-8F7E-C4B260563842 - 7a696a9a9564d2b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AlzheimersReminder.LocationViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "AlzheimersReminder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asilturk/Developer/AlzheimersReminder/AlzheimersReminder/AlzheimersReminder/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "126">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -236,10 +452,10 @@
             filePath = "AlzheimersReminder/LocationViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "LocationViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

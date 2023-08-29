@@ -36,12 +36,51 @@
                     <connections>
                         <outlet property="tableView" destination="oJm-ia-0c9" id="9Vu-7P-1BO"/>
                         <segue destination="llf-hl-g5s" kind="show" identifier="toDetailsVC" id="x8i-yB-Dbf"/>
-                        <segue destination="SrQ-RB-QLz" kind="show" identifier="toLocationVC" id="wYX-Pj-gHQ"/>
+                        <segue destination="mkI-nJ-YOd" kind="show" identifier="toLocationVC" id="KWU-HO-rGi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1057.2519083969464" y="-27.464788732394368"/>
+        </scene>
+        <!--Location View Controller-->
+        <scene sceneID="aVA-y5-mxd">
+            <objects>
+                <viewController id="mkI-nJ-YOd" customClass="LocationViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8ub-lq-ioS">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-I6-YKZ">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="separatorColor" systemColor="systemOrangeColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OQ4-Sb-6mj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UVp-I6-YKZ" firstAttribute="leading" secondItem="OQ4-Sb-6mj" secondAttribute="leading" id="0Ue-Pz-vFb"/>
+                            <constraint firstItem="UVp-I6-YKZ" firstAttribute="trailing" secondItem="OQ4-Sb-6mj" secondAttribute="trailing" id="49X-9D-1pV"/>
+                            <constraint firstItem="UVp-I6-YKZ" firstAttribute="top" secondItem="OQ4-Sb-6mj" secondAttribute="top" id="DcJ-Mr-yHc"/>
+                            <constraint firstItem="UVp-I6-YKZ" firstAttribute="bottom" secondItem="OQ4-Sb-6mj" secondAttribute="bottom" id="W1n-NT-JxJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aXl-3b-7y8">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="XpW-n7-ZSc">
+                            <connections>
+                                <action selector="addLocationTapped:" destination="mkI-nJ-YOd" id="DMB-iU-sH9"/>
+                                <segue destination="SrQ-RB-QLz" kind="show" identifier="toMapView" id="WTt-sh-lSD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="UVp-I6-YKZ" id="syr-2q-cP4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dSU-8o-mw2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="833" y="720"/>
         </scene>
         <!--Add Image-->
         <scene sceneID="cQR-BI-nak">
@@ -144,10 +183,10 @@
             </objects>
             <point key="canvasLocation" x="1980.916030534351" y="-27.464788732394368"/>
         </scene>
-        <!--Location View Controller-->
+        <!--MapVC-->
         <scene sceneID="cLp-eo-wgJ">
             <objects>
-                <viewController id="SrQ-RB-QLz" customClass="LocationViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="SrQ-RB-QLz" customClass="MapVC" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bzG-fe-Zcs">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

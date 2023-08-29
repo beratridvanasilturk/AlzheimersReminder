@@ -1,136 +1,158 @@
-////
-////  LocationViewController.swift
-////  AlzheimersReminder
-////
-////  Created by Berat Rıdvan Asiltürk on 27.08.2023.
-////
 //
-//import UIKit
-//import MapKit
-//import CoreLocation
-//import CoreData
+//  LocationViewController.swift
+//  AlzheimersReminder
 //
-//class LocationViewController: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
+//  Created by Berat Rıdvan Asiltürk on 29.08.2023.
 //
-//    var chosenLocationTitle = ""
-//    var chosenLongitutePoint = Double()
-//    var chosenLatitudePoint = Double()
-//    
-//    var chosenLocationId : UUID?
-//    var chosenLocation = ""
-//    
-//    @IBOutlet weak var locationTitleTextField: UITextField!
-//    
-//    @IBOutlet weak var locationSubtitleTextField: UITextField!
-//    //MARK: -Outlets
-//    @IBOutlet weak var mapView: MKMapView!
-//    // "CoreLocation Lokasyon Manageri" eklendi
-//    var locationManager = CLLocationManager()
-//    
-//    //MARK: -Funcs
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        mapView.delegate = self
-//        locationManager.delegate = self
-//        // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
-//        // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
-//        // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        // Kullanicidan izin istenir
-//        // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
-//        locationManager.requestWhenInUseAuthorization()
-//        // Kullanicinin lokasyonu alinmaya baslanir.
-//        locationManager.startUpdatingLocation()
-//        
-//        // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
-//        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
-//        
-//        // Kac saniye basildiktan sonra pin atacagimizi ayarlariz
-//        gestureRecognizer.minimumPressDuration = 1
-//        
-//        mapView.addGestureRecognizer(gestureRecognizer)
-//        
-//            
-//
-//    }
-//    
-//
-//        // MARK: TRUE
-//        // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
-//        // CLLocation enlem ve boylam icerir
-//        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//            
-//            // Kullanicinin anlik lokasyonunu aliriz
-//            let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
-//            // Lokasyonu gosterebilmek icin zoom seviyesi olusturmaliyiz
-//            // Span: yukseklik ve genislik yani zoom anlamina gelir
-//            // 0.02 degerleri ne kadar kuculurse o kadar yakinlastirilir
-//            let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-//            //  Region: Bolge anlamindadir, Bolge merkezini olusturdumuz lokasyona zoomunu da olusturdugumuz zoom'a atadik
-//            let region = MKCoordinateRegion(center: location, span: span)
-//            // Belirtilen enlem ve boylama yani bolgeye zoomlama islemini tamamlar
-//            mapView.setRegion(region, animated: true)
-//            
-//        }
-//
-//// choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
-//// MARK: TRUE
-//    @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
-//        // Gesture Recognizer baslama durumunu kontrol eder
-//        if gestureRecognizer.state == .began {
-//            // Toucked point kullanicinin dokunmus oldugu noktanin lokasyonunu almak icin kullanilir
-//            let touchedPoint = gestureRecognizer.location(in: self.mapView)
-//            // Dokunulan point'i coordinate'a cevirir
-//            let touchedCoordinate = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
-//            
-//            // CORE DATA'YA ENLEM BOYLAM ATAMAK ICIN DATAYI BURDAN CEKTIK
-//            // Core Dataya long ve latitude'u kaydetmek icin clasimizda birer degisken olusturup burdan aldigimiz long ve lat'leri o degiskene atar ve daha sonrasinda SaveButton'dan Core Data'ya aktaririz
-//            // Save Button Tapped ' da Attribute'lerde Core Data'ya Latitude ve Longitute Eklemek Ici Kullandik
-//            chosenLatitudePoint = touchedCoordinate.latitude
-//            chosenLongitutePoint = touchedCoordinate.longitude
-//            
-//            // Olusturdugumuz pini nereye atamamiz gerektigini ayarliyoruz
-//            // Annotation: Pin
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = touchedCoordinate
-//            annotation.title = locationTitleTextField.text
-//            annotation.subtitle = locationSubtitleTextField.text
-//            
-//            self.mapView.addAnnotation(annotation)
-//            
-//        }
-//    }
-//    
-//    
-//    
-//    @IBAction func saveButtonTapped(_ sender: Any) {
-//    
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = appDelegate.persistentContainer.viewContext
-//        // Seperated Entity Names with Image View Cont (DetailVC)
-//        let newLocation = NSEntityDescription.insertNewObject(forEntityName: "MyEntity", into: context)
-//        
-//        
-//        // Attributes
-//        
-//        newLocation.setValue(locationTitleTextField.text, forKey: "title")
-//        newLocation.setValue(locationSubtitleTextField.text, forKey: "subtitle")
-//        
-//        // Enlem ve boylami chose location func'tan aliriz direkt
-//        newLocation.setValue(chosenLatitudePoint, forKey: "latitude")
-//        newLocation.setValue(chosenLongitutePoint, forKey: "longitute")
-//        
-//        newLocation.setValue(UUID(), forKey: "id2")
-//      
-//        
-//        do {
-//            try context.save()
-//            print("Core Data Saving Success")
-//        } catch{
-//            print("Core Data Saving Error")
-//        }
-//        
-//    }
-//    
-//}
+
+import UIKit
+import CoreData
+
+class LocationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    //MARK: -Variables
+    var locationArray = [String]()
+    var idArray = [UUID]()
+    var selectedImage = ""
+    var selectedImageId : UUID?
+    
+    //MARK: - Funcs
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
+
+    
+        // Add Location Button
+        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addLocationTapped))
+        
+        getData()
+    }
+    
+    
+    
+    // DetailsVC'den NotCenter ile gozlemci ekleyerek DetailsVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // newData mesajini gordugunde getData'yi cagirir
+        // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
+        NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
+    
+    }
+    
+    
+    
+    
+    
+    
+    // Core Data'dan Veri cekmede kullanilir
+    @objc func getData() {
+        
+        // Verileri viewWillAppear'da notCenter ile cekerken burada temizlemeden cifter cekme islemi yapiyor, bunun onune gecmek icin array'lari basta kaldiriyoruz
+        locationArray.removeAll()
+        idArray.removeAll()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        // Context.fetch icin gerekli bir request class'i ve result protokolu. (documentasyondan ulasabiliriz cont.fetch'de gerekli oldugunu gormek icin)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+        // Core Data'nin cashe'dan okumamasi icin kullanilir, buyuk ve cok sayidaki veri saklamalarinda daha hizli geri donus almamiza olanak saglar
+        //  True oldugunda (default hali truedur) tum veriler hata ateşlenene kadar satır önbelleğinde bulunur. Hata tetiklendiğinde, Core Data verileri satır önbelleğinden alır.
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        // Datalari fetch ile cekeriz | fetch getir demektir
+        // Bu bir hata verebilecegi icin do catche ile yapacagiz
+        // Ve bunu bir degiskene almamizdaki amac for loop ile bu datalarla tek tek islem yapabilmek icindir
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            // NSManagedObj: results'dan dizi olarak gelen datalari tek tek objelere ayirmak, ayiklamak icin kullanilir
+            
+            // Hic gorsel yokken hata almamak adina if kosulu bagladik
+            if results.count > 0 {
+                for result in results as! [NSManagedObject] {
+                    // Kullanmak istedigimiz anahtar kelimeyi verip karsiliginda bir AnyObj aliyoruz ve bunu String olark Cast etmeye calisiyoruz, casting olumsuz sonuclanirsa bu islem hic yapilamayacaktir
+                    if let name = result.value(forKey: "title") as? String {
+                        self.locationArray.append(name)
+                    }
+                    
+                    if let name2 = result.value(forKey: "subtitle") as? String {
+                        self.locationArray.append(name2)
+                    }
+                    
+                    if let id = result.value(forKey: "id2") as? UUID {
+                        self.idArray.append(id)
+                    }
+                    
+                    // Gelen yeni veri sonrasi table view guncellenir
+//                    self.tableView.reloadData()
+                    
+                }
+            }
+                    
+        } catch {
+            print("Error: Data Fetch Resulst in ViewController")
+        }
+        
+    }
+    
+    
+    
+    
+    
+    // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini detailsVC'da gostermede kullanacagiz. Yani 1 VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toMapView" {
+            // DetailsVC'yi degisken gibi kaydederiz
+            let destinationVC = segue.destination as! MapVC
+            // AnaVC'de olusturdugumuz property'lerimizi DetailsVC'deki property'lere atadik
+            destinationVC.chosenLocation = selectedImage
+            destinationVC.chosenLocationId = selectedImageId
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Eger bir image'e tiklandiysa o isme tiklandigini belirtiriz
+        selectedImage = locationArray[indexPath.row]
+        selectedImageId = idArray[indexPath.row]
+        
+        performSegue(withIdentifier: "toMapView", sender: nil)
+    }
+    
+    
+    
+    
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return locationArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = locationArray[indexPath.row]
+        // Remove cell selection color
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    @objc func addLocationTapped() {
+        
+        performSegue(withIdentifier: "toMapView", sender: nil)
+        
+    }
+    
+    
+    @IBAction func addLocationTapped2r(_ sender: Any) {
+        
+        
+        performSegue(withIdentifier: "toMapView", sender: nil)
+        
+    }
+    
+    
+    
+}
