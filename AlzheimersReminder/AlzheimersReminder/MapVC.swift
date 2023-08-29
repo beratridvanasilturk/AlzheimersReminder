@@ -119,8 +119,17 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
                                          locationTitleTextField.text = annotationTitle
                                          locationSubtitleTextField.text = annotationSubtitle
                                          
-                                         
+                                         // Lokasyonu guncellemeyi kullanici hareket etmesi olasiligina karsin durdurduk.
+                                         locationManager.stopUpdatingLocation()
                                          // Core Data'dan Annotation Pin Cekme Islemi Sonuclanir
+                                         
+                                         // Secilen Annotation'a Zoom yapar
+                                         // 6 kod yukardaki location'u alip span ile birlikte zoomda kullanacagiz
+                                         let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+                                         let region = MKCoordinateRegion(center: coordinate, span: span)
+                                         mapView.setRegion(region, animated: true)
+                                         
+                                         
                                      }
                                 }
                             }
@@ -156,8 +165,8 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
             // Lokasyonu gosterebilmek icin zoom seviyesi olusturmaliyiz
             // Span: yukseklik ve genislik yani zoom anlamina gelir
-            // 0.02 degerleri ne kadar kuculurse o kadar yakinlastirilir
-            let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+            // 0.04 degerleri ne kadar kuculurse o kadar yakinlastirilir
+            let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
             //  Region: Bolge anlamindadir, Bolge merkezini olusturdumuz lokasyona zoomunu da olusturdugumuz zoom'a atadik
             let region = MKCoordinateRegion(center: location, span: span)
             // Belirtilen enlem ve boylama yani bolgeye zoomlama islemini tamamlar
