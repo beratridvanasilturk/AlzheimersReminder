@@ -141,7 +141,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         cell.selectionStyle = .none
         return cell
     }
-    
 
     
     
