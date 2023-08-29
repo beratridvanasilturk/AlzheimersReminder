@@ -141,11 +141,70 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func addLocationTapped(_ sender: Any) {
         
-        
+        selectedLocation = ""
         performSegue(withIdentifier: "toMapView", sender: nil)
         
     }
     
+    
+    
+    // Swipe to Delete
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            // Core Data'dan  verileri bulup silmemiz gerekir
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            // Fetch request'in olusturulma amaci ilgili veriyi cekip silmek icindir
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            // Predicate kullanim amaci sadece 1 veriyi silmek isteyisimiz, o veriyi bulup cekip silecegiz.
+            // Nereye tiklandiysa onun id'sini bulmamizi saglar
+            let idString = idArray[indexPath.row].uuidString
+            fetchRequest.predicate = NSPredicate(format: "id2 = %@", idString)
+            // Cachelarle ilgili uygulamaya hiz ve verim saglar
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+            let results = try context.fetch(fetchRequest)
+                if results.count > 0 {
+                              
+                    for result in results as! [NSManagedObject] {
+                                  
+                        if let id = result.value(forKey: "id2") as? UUID {
+                            // Iki id'nin de birbirine esit olmasini saglama aliyoruz
+                            if id == idArray[indexPath.row] {
+                            // Core Data'dan result'u siler
+                            context.delete(result)
+                            locationArray.remove(at: indexPath.row)
+                            idArray.remove(at: indexPath.row)
+                            // TableView'i guncelleriz
+                            self.tableView.reloadData()
+                            
+                            // Cora Data'da yapilan degisiklikleri kaydeder
+                            do {
+                                try context.save()
+                                              
+                            } catch {
+                            print("error")
+                                          }
+                            // Eger aradigim seyi bulup sildiysem for loop'un devam etmesini kirmak icin kullandik
+                            break
+                            
+                            }
+                                      
+                        }
+                                  
+                                  
+                    }
+                              
+                              
+                }
+            } catch {
+                print("error")
+            }
+        }
+    }
     
     
 }
