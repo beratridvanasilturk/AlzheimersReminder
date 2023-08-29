@@ -12,7 +12,7 @@
         <!--My Alzheimer's Antidote-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ImageListViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="1057.2519083969464" y="-27.464788732394368"/>
         </scene>
-        <!--Location View Controller-->
+        <!--Location List View Controller-->
         <scene sceneID="aVA-y5-mxd">
             <objects>
-                <viewController id="mkI-nJ-YOd" customClass="LocationViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mkI-nJ-YOd" customClass="LocationListViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8ub-lq-ioS">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,13 +69,13 @@
                     <navigationItem key="navigationItem" id="aXl-3b-7y8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XpW-n7-ZSc">
                             <connections>
-                                <action selector="addLocationTapped:" destination="mkI-nJ-YOd" id="DMB-iU-sH9"/>
-                                <segue destination="SrQ-RB-QLz" kind="show" identifier="toMapView" id="WTt-sh-lSD"/>
+                                <action selector="addLocationTapped:" destination="mkI-nJ-YOd" id="GXD-Ts-uNc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="UVp-I6-YKZ" id="syr-2q-cP4"/>
+                        <segue destination="SrQ-RB-QLz" kind="show" identifier="toMapView" id="b0x-2s-yUm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dSU-8o-mw2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

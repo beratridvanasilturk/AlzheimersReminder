@@ -109,7 +109,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
             endingLineNumber = "136"
-            landmarkName = "LocationViewController"
+            landmarkName = "LocationListViewController"
             landmarkType = "3">
             <Locations>
                <Location
@@ -250,7 +250,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
             endingLineNumber = "131"
-            landmarkName = "LocationViewController"
+            landmarkName = "LocationListViewController"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>

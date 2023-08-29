@@ -59,7 +59,7 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
         
         // Kac saniye basildiktan sonra pin atacagimizi ayarlariz
-        gestureRecognizer.minimumPressDuration = 1
+        gestureRecognizer.minimumPressDuration = 2
         
         mapView.addGestureRecognizer(gestureRecognizer)
         
@@ -135,6 +135,7 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         }
             else {
         
+                // Secilen bir sey yoksa textfield'lari sifirlar
                 locationTitleTextField.text = ""
                 locationSubtitleTextField.text = ""
                 

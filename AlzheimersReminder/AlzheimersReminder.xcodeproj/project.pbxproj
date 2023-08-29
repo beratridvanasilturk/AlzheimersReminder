@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA9B92DC2A9E854500C27BF3 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B92DB2A9E854500C27BF3 /* LocationViewController.swift */; };
+		EA9B92DC2A9E854500C27BF3 /* LocationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B92DB2A9E854500C27BF3 /* LocationListViewController.swift */; };
 		EABDB3502A9ACB0F00889F7F /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDB34F2A9ACB0F00889F7F /* MapVC.swift */; };
 		EAE2CEDD2A98A5CF0015A887 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEDC2A98A5CF0015A887 /* AppDelegate.swift */; };
 		EAE2CEDF2A98A5CF0015A887 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */; };
-		EAE2CEE12A98A5CF0015A887 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEE02A98A5CF0015A887 /* ViewController.swift */; };
+		EAE2CEE12A98A5CF0015A887 /* ImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEE02A98A5CF0015A887 /* ImageListViewController.swift */; };
 		EAE2CEE42A98A5CF0015A887 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE2CEE22A98A5CF0015A887 /* Main.storyboard */; };
 		EAE2CEE72A98A5CF0015A887 /* Entity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEE52A98A5CF0015A887 /* Entity.xcdatamodeld */; };
 		EAE2CEE92A98A5D10015A887 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAE2CEE82A98A5D10015A887 /* Assets.xcassets */; };
@@ -20,12 +20,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EA9B92DB2A9E854500C27BF3 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		EA9B92DB2A9E854500C27BF3 /* LocationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListViewController.swift; sourceTree = "<group>"; };
 		EABDB34F2A9ACB0F00889F7F /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		EAE2CED92A98A5CF0015A887 /* AlzheimersReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzheimersReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAE2CEDC2A98A5CF0015A887 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EAE2CEE02A98A5CF0015A887 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EAE2CEE02A98A5CF0015A887 /* ImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewController.swift; sourceTree = "<group>"; };
 		EAE2CEE32A98A5CF0015A887 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EAE2CEE62A98A5CF0015A887 /* AlzheimersReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AlzheimersReminder.xcdatamodel; sourceTree = "<group>"; };
 		EAE2CEE82A98A5D10015A887 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,8 +66,8 @@
 			children = (
 				EAE2CEDC2A98A5CF0015A887 /* AppDelegate.swift */,
 				EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */,
-				EAE2CEE02A98A5CF0015A887 /* ViewController.swift */,
-				EA9B92DB2A9E854500C27BF3 /* LocationViewController.swift */,
+				EAE2CEE02A98A5CF0015A887 /* ImageListViewController.swift */,
+				EA9B92DB2A9E854500C27BF3 /* LocationListViewController.swift */,
 				EAE2CEF32A98A7EC0015A887 /* DetailsVC.swift */,
 				EABDB34F2A9ACB0F00889F7F /* MapVC.swift */,
 				EAE2CEE22A98A5CF0015A887 /* Main.storyboard */,
@@ -150,13 +150,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAE2CEE12A98A5CF0015A887 /* ViewController.swift in Sources */,
+				EAE2CEE12A98A5CF0015A887 /* ImageListViewController.swift in Sources */,
 				EAE2CEE72A98A5CF0015A887 /* Entity.xcdatamodeld in Sources */,
 				EAE2CEDD2A98A5CF0015A887 /* AppDelegate.swift in Sources */,
 				EABDB3502A9ACB0F00889F7F /* MapVC.swift in Sources */,
 				EAE2CEDF2A98A5CF0015A887 /* SceneDelegate.swift in Sources */,
 				EAE2CEF42A98A7EC0015A887 /* DetailsVC.swift in Sources */,
-				EA9B92DC2A9E854500C27BF3 /* LocationViewController.swift in Sources */,
+				EA9B92DC2A9E854500C27BF3 /* LocationListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

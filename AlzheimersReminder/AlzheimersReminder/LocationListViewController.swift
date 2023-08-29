@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class LocationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LocationListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -19,6 +19,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     var chosenLocationTitleId : UUID?
     var chosenLocationTitle = ""
+    
     
 
     //MARK: - Funcs
@@ -146,7 +147,9 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func addLocationTapped(_ sender: Any) {
         
+        // Text field'lari sifirlamak icin kullandik
         chosenLocationTitle = ""
+        
         performSegue(withIdentifier: "toMapView", sender: nil)
         
     }
