@@ -70,22 +70,22 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             
             // Hic gorsel yokken hata almamak adina if kosulu bagladik
             if results.count > 0 {
+                
+                self.locationArray.removeAll()
+                self.idArray.removeAll()
+                
                 for result in results as! [NSManagedObject] {
                     // Kullanmak istedigimiz anahtar kelimeyi verip karsiliginda bir AnyObj aliyoruz ve bunu String olark Cast etmeye calisiyoruz, casting olumsuz sonuclanirsa bu islem hic yapilamayacaktir
                     if let name = result.value(forKey: "title") as? String {
                         self.locationArray.append(name)
                     }
-                    
-//                    if let name2 = result.value(forKey: "subtitle") as? String {
-//                        self.locationArray.append(name2)
-//                    }
-//
+                
                     if let id2 = result.value(forKey: "id2") as? UUID {
                         self.idArray.append(id2)
                     }
                     
                     // Gelen yeni veri sonrasi table view guncellenir
-//                    self.tableView.reloadData()
+                    self.tableView.reloadData()
                     
                 }
             }
