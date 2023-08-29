@@ -33,19 +33,70 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
     //MARK: -Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
+        if chosenLocation != "" {
+            mapView.delegate = self
+            locationManager.delegate = self
+            // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
+            // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
+            // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            // Kullanicidan izin istenir
+            // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
+            locationManager.requestWhenInUseAuthorization()
+            // Kullanicinin lokasyonu alinmaya baslanir.
+            locationManager.startUpdatingLocation()
+            
+            // Core Data'dan cekecegiz
+            // Ilk olarak appDelegate'i cagirdik
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            // Context'i (baglam) olusturduk
+            let context = appDelegate.persistentContainer.viewContext
+            
+            // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            
+            // Filtreleme islemi icin
+            let idString = chosenLocationId?.uuidString
+            // Predicate bizim yazdigimiz kosulu bulup bize fetch eder
+            // id = %@ : id'si virgulden sonraki argumana (idString'e) esit olan seyi bul anlamindadir
+            // id yerine name getirmesini isteseydik ..format: "name = %@", self.chosenImage) yazardik. Biz ayni name'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
+            fetchRequest.predicate = NSPredicate(format: "id2 = %@", idString!)
+            
+            // Verimi artirmak icin cache datalari duzenler
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                if results.count > 0 {
+                    
+                    for result in results as! [NSManagedObject] {
+                        
+                        if let title = result.value(forKey: "title") as? String {
+                            locationTitleTextField.text = title
+                        }
+                        if let subtitle = result.value(forKey: "subtitle") as? String {
+                            locationSubtitleTextField.text = subtitle
+                        }
+                    }
+                }
+                
+            } catch {
+                print("Error do-catch in DetailsVC")
+                
+            }
+        }
+            else {
         
-        mapView.delegate = self
-        locationManager.delegate = self
-        // Kullanicinin lokasyonunun keskinligi (metre cinsi) belirlenir
-        // Uygulamalarin amaclarina gore buradaki lokasyon sapmasi degisebilir ancak bizim projemizde en detayli konum bulmak hayati oneme sahiptir.
-        // En detayli konum icin "kCLLocationAccuracyBest" kullanilir
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // Kullanicidan izin istenir
-        // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
-        locationManager.requestWhenInUseAuthorization()
-        // Kullanicinin lokasyonu alinmaya baslanir.
-        locationManager.startUpdatingLocation()
-        
+                locationTitleTextField.text = ""
+                locationSubtitleTextField.text = ""
+                
+            }
+            
+            
+            
+            
+            
         // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
         

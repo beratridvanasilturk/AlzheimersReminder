@@ -128,7 +128,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
     }
     
-    // Gorsel secildikten sonra image view'a gorselin aktarilmasini saglar
+    // Gorsel galeriden secildikten sonra image view'a gorselin aktarilmasini saglar
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // .editedImage yerine originalImage'i de kullanabilirdik. Genellikle ikisi kullanilir ama bu projede editi actigimiz icin editingImage daha saglikli olacaktir
         imageView.image = info[.editedImage] as? UIImage
@@ -148,6 +148,8 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         self.present(alert, animated: true, completion: nil)
         
     }
+    
+    
     @IBAction func saveButtonTapped(_ sender: Any) {
         
         // Bizim context'e ulasabilmemiz icin appdelegate'i bir degisken olarak atamamiz gerekir. Context: AppDelegate -> func saveContext

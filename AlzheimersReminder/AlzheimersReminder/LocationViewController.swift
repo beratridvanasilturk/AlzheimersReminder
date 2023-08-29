@@ -111,6 +111,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Eger bir image'e tiklandiysa o isme tiklandigini belirtiriz
         selectedLocation = locationArray[indexPath.row]
