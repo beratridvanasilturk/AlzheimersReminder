@@ -43,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="1057.2519083969464" y="-27.464788732394368"/>
         </scene>
-        <!--Location List View Controller-->
+        <!--Locations-->
         <scene sceneID="aVA-y5-mxd">
             <objects>
                 <viewController id="mkI-nJ-YOd" customClass="LocationListViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,10 +51,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-I6-YKZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-I6-YKZ">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="separatorColor" systemColor="systemOrangeColor"/>
+                                <color key="separatorColor" systemColor="systemPurpleColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OQ4-Sb-6mj"/>
@@ -66,7 +65,7 @@
                             <constraint firstItem="UVp-I6-YKZ" firstAttribute="bottom" secondItem="OQ4-Sb-6mj" secondAttribute="bottom" id="W1n-NT-JxJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="aXl-3b-7y8">
+                    <navigationItem key="navigationItem" title="Locations" id="aXl-3b-7y8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XpW-n7-ZSc">
                             <connections>
                                 <action selector="addLocationTapped:" destination="mkI-nJ-YOd" id="GXD-Ts-uNc"/>
@@ -273,6 +272,9 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
