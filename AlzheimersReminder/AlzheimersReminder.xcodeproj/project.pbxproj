@@ -16,7 +16,7 @@
 		EAE2CEE72A98A5CF0015A887 /* Entity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEE52A98A5CF0015A887 /* Entity.xcdatamodeld */; };
 		EAE2CEE92A98A5D10015A887 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAE2CEE82A98A5D10015A887 /* Assets.xcassets */; };
 		EAE2CEEC2A98A5D10015A887 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE2CEEA2A98A5D10015A887 /* LaunchScreen.storyboard */; };
-		EAE2CEF42A98A7EC0015A887 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEF32A98A7EC0015A887 /* DetailsVC.swift */; };
+		EAE2CEF42A98A7EC0015A887 /* ImageDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2CEF32A98A7EC0015A887 /* ImageDetailsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 		EAE2CEE82A98A5D10015A887 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EAE2CEEB2A98A5D10015A887 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAE2CEED2A98A5D10015A887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EAE2CEF32A98A7EC0015A887 /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
+		EAE2CEF32A98A7EC0015A887 /* ImageDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +68,7 @@
 				EAE2CEDE2A98A5CF0015A887 /* SceneDelegate.swift */,
 				EAE2CEE02A98A5CF0015A887 /* ImageListViewController.swift */,
 				EA9B92DB2A9E854500C27BF3 /* LocationListViewController.swift */,
-				EAE2CEF32A98A7EC0015A887 /* DetailsVC.swift */,
+				EAE2CEF32A98A7EC0015A887 /* ImageDetailsVC.swift */,
 				EABDB34F2A9ACB0F00889F7F /* MapVC.swift */,
 				EAE2CEE22A98A5CF0015A887 /* Main.storyboard */,
 				EAE2CEE82A98A5D10015A887 /* Assets.xcassets */,
@@ -155,7 +155,7 @@
 				EAE2CEDD2A98A5CF0015A887 /* AppDelegate.swift in Sources */,
 				EABDB3502A9ACB0F00889F7F /* MapVC.swift in Sources */,
 				EAE2CEDF2A98A5CF0015A887 /* SceneDelegate.swift in Sources */,
-				EAE2CEF42A98A7EC0015A887 /* DetailsVC.swift in Sources */,
+				EAE2CEF42A98A7EC0015A887 /* ImageDetailsVC.swift in Sources */,
 				EA9B92DC2A9E854500C27BF3 /* LocationListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

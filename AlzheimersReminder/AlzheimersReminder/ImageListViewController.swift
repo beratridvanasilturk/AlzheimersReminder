@@ -12,11 +12,13 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
 
     //MARK: -Outlets
     @IBOutlet weak var tableView: UITableView!
+    
     //MARK: -Variables
     var nameArray = [String]()
     var idArray = [UUID]()
     var selectedImage = ""
     var selectedImageId : UUID?
+    
     //MARK: - Funcs
     override func viewDidLoad() {
         
@@ -24,42 +26,40 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.dataSource = self
         tableView.delegate = self
         
-        // FIXME: - Eger Store'a atarken button konumu sebebiyle uygulama ret yerse ui'da farkli bir konuma button olusturarak segue yapilmalidir. Buyuk ihtimalle button konumu itibariyle AppStore icin onaydan gecemeyecektir.
+        // FIXME: - Eger Apple Store'a atarken button konumu sebebiyle uygulama ret yerse ui'da farkli bir konuma button olusturarak segue yapilmalidir. Buyuk ihtimalle button konumu itibariyle AppStore icin onaydan gecemeyecektir.
         // Add Location Button
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.search, target: self, action: #selector(locationButtonTapped))
         
         // Add Image Button
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonTapped))
         
+        // UI'da data gunceller.
         getData()
+        
     }
     
-    // DetailsVC'den NotCenter ile gozlemci ekleyerek DetailsVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
+    // ImageDetailsVC'den NotCenter ile gozlemci ekleyerek ImageDetailsVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
     override func viewWillAppear(_ animated: Bool) {
         
         // newData mesajini gordugunde getData'yi cagirir
         // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
         NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
-    
     }
     
     @objc func locationButtonTapped() {
-        
         performSegue(withIdentifier: "toLocationVC", sender: nil)
-        
     }
-    
     
     // Core Data'dan Veri cekmede kullanilir
     @objc func getData() {
         
-        // Verileri viewWillAppear'da notCenter ile cekerken burada temizlemeden cifter cekme islemi yapiyor, bunun onune gecmek icin array'lari basta kaldiriyoruz
+        // Verileri viewWillAppear'da notCenter ile cekerken burada temizlemeden bu islemi yaparsak cifter cekme islemi yapiyor, bunun onune gecmek icin array'lari basta kaldiriyoruz
         nameArray.removeAll()
         idArray.removeAll()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        // Context.fetch icin gerekli bir request class'i ve result protokolu. (documentasyondan ulasabiliriz cont.fetch'de gerekli oldugunu gormek icin)
+        // Context.fetch icin gerekli bir request class'i ve result protokolu. (documentasyondan ulasabiliriz context.fetch'de gerekli oldugunu gormek icin)
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
         // Core Data'nin cashe'dan okumamasi icin kullanilir, buyuk ve cok sayidaki veri saklamalarinda daha hizli geri donus almamiza olanak saglar
         //  True oldugunda (default hali truedur) tum veriler hata ateşlenene kadar satır önbelleğinde bulunur. Hata tetiklendiğinde, Core Data verileri satır önbelleğinden alır.
@@ -68,11 +68,10 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
         // Datalari fetch ile cekeriz | fetch getir demektir
         // Bu bir hata verebilecegi icin do catche ile yapacagiz
         // Ve bunu bir degiskene almamizdaki amac for loop ile bu datalarla tek tek islem yapabilmek icindir
-        
         do {
             let results = try context.fetch(fetchRequest)
-            // NSManagedObj: results'dan dizi olarak gelen datalari tek tek objelere ayirmak, ayiklamak icin kullanilir
             
+            // NSManagedObj: results'dan dizi olarak gelen datalari tek tek objelere ayirmak, ayiklamak icin kullanilir
             // Hic gorsel yokken hata almamak adina if kosulu bagladik
             if results.count > 0 {
                 for result in results as! [NSManagedObject] {
@@ -87,14 +86,12 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
                     
                     // Gelen yeni veri sonrasi table view guncellenir
                     self.tableView.reloadData()
-                    
                 }
             }
                     
         } catch {
-            print("Error: Data Fetch Resulst in ViewController")
+            print("Error: Data Fetching Resulst in ImageListViewController")
         }
-        
     }
    
     @objc func addButtonTapped() {
@@ -114,12 +111,13 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
-    // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini detailsVC'da gostermede kullanacagiz. Yani 1 VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
+    // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini ImageDetailsVC'da gostermede kullanacagiz. Yani ilk, ana VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
+    // Text field'i hem kullanicidan veri almak icin hem de alinan veriyi Core Data'dan cekip basamak icin kullanacagiz.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailsVC" {
-            // DetailsVC'yi degisken gibi kaydederiz
-            let destinationVC = segue.destination as! DetailsVC
-            // AnaVC'de olusturdugumuz property'lerimizi DetailsVC'deki property'lere atadik
+            // ImageDetailsVC'yi degisken gibi kaydederiz
+            let destinationVC = segue.destination as! ImageDetailsVC
+            // AnaVC'de olusturdugumuz property'lerimizi ImageDetailsVC'deki property'lere atadik
             destinationVC.chosenImage = selectedImage
             destinationVC.chosenImageId = selectedImageId
         }
@@ -132,6 +130,7 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
+    
     // Swipe to Delete
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -142,10 +141,12 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
             
             // Fetch request'in olusturulma amaci ilgili veriyi cekip silmek icindir
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            
             // Predicate kullanim amaci sadece 1 veriyi silmek isteyisimiz, o veriyi bulup cekip silecegiz.
             // Nereye tiklandiysa onun id'sini bulmamizi saglar
             let idString = idArray[indexPath.row].uuidString
             fetchRequest.predicate = NSPredicate(format: "id = %@", idString)
+            
             // Cachelarle ilgili uygulamaya hiz ve verim saglar
             fetchRequest.returnsObjectsAsFaults = false
             
@@ -172,20 +173,14 @@ class ImageListViewController: UIViewController, UITableViewDelegate, UITableVie
                             } catch {
                             print("error")
                                           }
-                            // Eger aradigim seyi bulup sildiysem for loop'un devam etmesini kirmak icin kullandik
+                            // Eger aradigim seyi bulup sildiysem for loop'un devam etmesini kirmak icin break kullandik
                             break
-                            
                             }
-                                      
                         }
-                                  
-                                  
                     }
-                              
-                              
                 }
             } catch {
-                print("error")
+                print(" Error In Swipe To Delete")
             }
         }
     }

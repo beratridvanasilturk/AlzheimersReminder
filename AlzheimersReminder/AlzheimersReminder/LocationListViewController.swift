@@ -9,18 +9,15 @@ import UIKit
 import CoreData
 
 class LocationListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
+    //MARK: -Outlets
     @IBOutlet weak var tableView: UITableView!
     
     //MARK: -Variables
     var locationArray = [String]()
     var idArray = [UUID]()
-    
-    
     var chosenLocationTitleId : UUID?
     var chosenLocationTitle = ""
-    
-    
 
     //MARK: - Funcs
     override func viewDidLoad() {
@@ -28,26 +25,17 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-
   
         getData2()
     }
     
-    
-    
-    // DetailsVC'den NotCenter ile gozlemci ekleyerek DetailsVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
+    // MapVC'den NotCenter ile gozlemci ekleyerek MapVC'den gelen mektuba gore yapilmasi gereken islemi bildirecegiz (getData'yi cagiracagiz)
     override func viewWillAppear(_ animated: Bool) {
         
-        // newData mesajini gordugunde getData'yi cagirir
-        // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
+        // newPlace mesajini gordugunde getData'yi cagirir
+        // Yani kisaca eklenen location'u UI'da (UITableView'de) guncellemek icin notcenter kullandik
         NotificationCenter.default.addObserver(self, selector: #selector(getData2), name: NSNotification.Name(rawValue: "newPlace"), object: nil)
-    
     }
-    
-    
-    
-    
-    
     
     // Core Data'dan Veri cekmede kullanilir
     @objc func getData2() {
@@ -67,7 +55,6 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
         // Datalari fetch ile cekeriz | fetch getir demektir
         // Bu bir hata verebilecegi icin do catche ile yapacagiz
         // Ve bunu bir degiskene almamizdaki amac for loop ile bu datalarla tek tek islem yapabilmek icindir
-        
         do {
             let results = try context.fetch(fetchRequest)
             // NSManagedObj: results'dan dizi olarak gelen datalari tek tek objelere ayirmak, ayiklamak icin kullanilir
@@ -90,46 +77,34 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
                     
                     // Gelen yeni veri sonrasi table view guncellenir
                     self.tableView.reloadData()
-                    
                 }
             }
-                    
         } catch {
-            print("Error: Data Fetch Resulst in ViewController")
+            print("Error: Data Fetch Resulst in LocationListViewController")
         }
-        
     }
     
-    
-    
-    
-    
-    // Prepare ve DidSelectRow fonksiyonlari secilen image'larin bilgilerini detailsVC'da gostermede kullanacagiz. Yani 1 VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen image'in bilgilerini yine ayni VC'da basmak icin kullanacagiz.
+    // Prepare ve DidSelectRow fonksiyonlari secilen location'larin bilgilerini MapVC'da gostermede kullanacagiz. Yani ilk, ana VC'yi hem kullanicidan girdi almak icin hem de daha once kaydedilen location'un bilgilerini yine ayni VC'da basmak icin kullanacagiz.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMapView" {
-            // DetailsVC'yi degisken gibi kaydederiz
+            // MapVC'yi degisken gibi kaydederiz
             let destinationVC = segue.destination as! MapVC
-            // AnaVC'de olusturdugumuz property'lerimizi DetailsVC'deki property'lere atadik
+            
+            // AnaVC'de olusturdugumuz property'lerimizi MapVC'deki property'lere atadik
             destinationVC.selectedTitle = chosenLocationTitle
             destinationVC.selectedTitleId = chosenLocationTitleId
             
-            // LOCVC 'den MAPVC'ye Data Aktarimi Gerceklesmis Olur
+            // Boylelikle LocationListVC'den MapVC'e Data Aktarimi Gerceklesmis Olur
         }
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Eger bir image'e tiklandiysa o isme tiklandigini belirtiriz
+        // Eger bir location'a tiklandiysa o isme tiklandigini belirtiriz
         chosenLocationTitle = locationArray[indexPath.row]
         chosenLocationTitleId = idArray[indexPath.row]
         
         performSegue(withIdentifier: "toMapView", sender: nil)
     }
-    
-    
-    
-    
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locationArray.count
@@ -142,8 +117,6 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
         cell.selectionStyle = .none
         return cell
     }
-
-    
     
     @IBAction func addLocationTapped(_ sender: Any) {
         
@@ -151,10 +124,7 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
         chosenLocationTitle = ""
         
         performSegue(withIdentifier: "toMapView", sender: nil)
-        
     }
-    
-    
     
     // Swipe to Delete
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -170,6 +140,7 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
             // Nereye tiklandiysa onun id'sini bulmamizi saglar
             let idString = idArray[indexPath.row].uuidString
             fetchRequest.predicate = NSPredicate(format: "id2 = %@", idString)
+            
             // Cachelarle ilgili uygulamaya hiz ve verim saglar
             fetchRequest.returnsObjectsAsFaults = false
             
@@ -178,41 +149,35 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
                 if results.count > 0 {
                               
                     for result in results as! [NSManagedObject] {
-                                  
+                        
                         if let id = result.value(forKey: "id2") as? UUID {
                             // Iki id'nin de birbirine esit olmasini saglama aliyoruz
                             if id == idArray[indexPath.row] {
-                            // Core Data'dan result'u siler
-                            context.delete(result)
-                            locationArray.remove(at: indexPath.row)
-                            idArray.remove(at: indexPath.row)
-                            // TableView'i guncelleriz
-                            self.tableView.reloadData()
-                            
-                            // Cora Data'da yapilan degisiklikleri kaydeder
-                            do {
-                                try context.save()
-                                              
-                            } catch {
-                            print("error")
-                                          }
-                            // Eger aradigim seyi bulup sildiysem for loop'un devam etmesini kirmak icin kullandik
-                            break
-                            
+                                // Core Data'dan result'u siler
+                                context.delete(result)
+                                
+                                locationArray.remove(at: indexPath.row)
+                                idArray.remove(at: indexPath.row)
+                                
+                                // TableView'i guncelleriz
+                                self.tableView.reloadData()
+                                
+                                // Cora Data'da yapilan degisiklikleri kaydeder
+                                do {
+                                    try context.save()
+                                    
+                                } catch {
+                                    print("error")
+                                }
+                                // Eger aradigim seyi bulup sildiysem for loop'un devam etmesini kirmak icin break kullandik
+                                break
                             }
-                                      
                         }
-                                  
-                                  
                     }
-                              
-                              
                 }
             } catch {
                 print("error")
             }
         }
     }
-    
-    
 }

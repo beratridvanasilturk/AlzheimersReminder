@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Alzheimer's Antidote-->
+        <!--People & Images-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ImageListViewController" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +32,7 @@
                             <constraint firstItem="oJm-ia-0c9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zym-C0-KGr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="My Alzheimer's Antidote" id="tlD-gX-pzx"/>
+                    <navigationItem key="navigationItem" title="People &amp; Images" id="tlD-gX-pzx"/>
                     <connections>
                         <outlet property="tableView" destination="oJm-ia-0c9" id="9Vu-7P-1BO"/>
                         <segue destination="llf-hl-g5s" kind="show" identifier="toDetailsVC" id="x8i-yB-Dbf"/>
@@ -84,7 +84,7 @@
         <!--Add Image-->
         <scene sceneID="cQR-BI-nak">
             <objects>
-                <viewController id="llf-hl-g5s" customClass="DetailsVC" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="llf-hl-g5s" customClass="ImageDetailsVC" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kvt-ED-k8S">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -182,7 +182,7 @@
             </objects>
             <point key="canvasLocation" x="1980.916030534351" y="-27.464788732394368"/>
         </scene>
-        <!--MapVC-->
+        <!--Add Location-->
         <scene sceneID="cLp-eo-wgJ">
             <objects>
                 <viewController id="SrQ-RB-QLz" customClass="MapVC" customModule="AlzheimersReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -234,7 +234,7 @@
                             <constraint firstItem="Eih-bP-zO8" firstAttribute="top" secondItem="bwV-P7-dk2" secondAttribute="bottom" constant="8" id="urU-nE-UTf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="QxU-A4-plq"/>
+                    <navigationItem key="navigationItem" title="Add Location" id="QxU-A4-plq"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="locationSubtitleTextField" destination="fmY-KO-TSY" id="DL4-Hb-2GT"/>

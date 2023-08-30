@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ImageDetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: -Outlets
     @IBOutlet weak var numberTextField: UITextField!
@@ -29,6 +29,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         name2TextField.backgroundColor = .systemGreen
         numberTextField.backgroundColor = .systemYellow
         
+        // Eger secilen bir image varsa Core Data'dan verileri getirecegiz.
         if chosenImage != "" {
             
             // Detail ekraninda daha oncesinde kaydedilen gorsele tiklandiginda save butonunu gorunmez yapar
@@ -43,8 +44,9 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
             
-            // Filtreleme islemi icin
+            // Tiklanan yerin id'sini verir, bu unique degeri kullanarak datalari fetch edecegiz.
             let idString = chosenImageId?.uuidString
+            
             // Predicate bizim yazdigimiz kosulu bulup bize fetch eder
             // id = %@ : id'si virgulden sonraki argumana (idString'e) esit olan seyi bul anlamindadir
             // id yerine name getirmesini isteseydik ..format: "name = %@", self.chosenImage) yazardik. Biz ayni name'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
@@ -74,16 +76,13 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                             imageView.image = image
                         }
                     }
-                    
-                    
                 }
-                
             } catch {
                 print("Error do-catch in DetailsVC")
-                
             }
         }
-            // if chosenImage != "" Degilse yani
+        
+            // if chosenImage bos ise
             else {
                 // Save button gorunur olsun
                 saveButton.isHidden = false
@@ -95,17 +94,18 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                 numberTextField.text = ""
             }
         
-        // Recognizer
-        
+        // Gesture Recognizer
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        // View'in kendisine ekledik
+        
+        // View'in kendisine gesture recognizer ekledik, Ui'da bos bir alana tiklayinca klavyeyi kapatmada kullanacagiz
         view.addGestureRecognizer(gestureRecognizer)
         
-        // Kullanicinin gorsele tiklamasini duzenler
+        // Kullanicinin gorsele tiklamasina izin verir
         imageView.isUserInteractionEnabled = true
+        
+        // Image'e tiklandiginda ne yapilmasi gerektigini duzenler
         let imageTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
         imageView.addGestureRecognizer(imageTapRecognizer)
-        
     }
     
     // Ui'da bosluga tiklayinca klavyeyi kapatma func
@@ -125,7 +125,6 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         picker.allowsEditing = true
         // picker'i present etmeliyiz
         present(picker, animated: true)
-        
     }
     
     // Gorsel galeriden secildikten sonra image view'a gorselin aktarilmasini saglar
@@ -140,16 +139,15 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     }
     
     //MARK: - Actions
-    // Core Data ile secilen image'i hafizaya atar
+
     @IBAction func askMarkTapped(_ sender: Any) {
         
         let alert = UIAlertController(title: "Alert About Numbers!", message: "If you want to enter a phone number you can write without a space between numbers and without using a zero at the beginning.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
     }
     
-    
+    // Core Data ile secilen image'i hafizaya atar
     @IBAction func saveButtonTapped(_ sender: Any) {
         
         // Bizim context'e ulasabilmemiz icin appdelegate'i bir degisken olarak atamamiz gerekir. Context: AppDelegate -> func saveContext
@@ -157,31 +155,31 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         // persistentContainer.viewContext ile AppDelegate'deki supporting context'leri kullanabilir hale geliriz
         let context = appDelegate.persistentContainer.viewContext
-        // Entity name'i AlzheimersReminder.xcdatamodeld dosyasindaki basliktan aldik, veriyi nereye kaydececegimizi belirlemek icin kullandik NSEntityDescription.insertObj'yi
+        // Entity name'i Entity.xcdatamodeld dosyasindaki basliktan aldik, veriyi nereye kaydececegimizi belirlemek icin kullandik NSEntityDescription.insertObj'yi
         let newImage = NSEntityDescription.insertNewObject(forEntityName: "Entity", into: context)
         
         // Attributes
-        // Attributeleri AlzheimersReminder.xcdatamodeld dosyasinda olusturdugumuz projemizde olmasini istedigimiz ozelliklerden aldik ki ona gore kaydetmek istedigimiz tum her seyi unique sekilde save edebilelim.
+        // Attributeleri Entity.xcdatamodeld dosyasinda olusturdugumuz projemizde olmasini istedigimiz ozelliklerden aldik ki ona gore kaydetmek istedigimiz tum her seyi unique sekilde save edebilelim.
         newImage.setValue(nameTextField.text, forKey: "name")
         newImage.setValue(name2TextField.text, forKey: "name2")
         newImage.setValue(UUID(), forKey: "id")
         if let num = Int(numberTextField.text!) {
             newImage.setValue(num, forKey: "number")
-            
         }
+        
         // compressionQuality image'in kaydetme kalitesini duzenler, sıkıstırma islemidir.
         let data = imageView.image?.jpegData(compressionQuality: 0.5)
-        newImage.setValue(data, forKey: "image")
         
+        newImage.setValue(data, forKey: "image")
         do {
             try context.save()
             print("Sucseed Image Save")
         } catch {
             print("Error: Image Save")
         }
-        // Observer'lar icin (view controller arasi) mesaj yollama tool'udur,
+        // Notification Center observer'lar icin (view controller arasi) mesaj yollama tool'udur,
         // Amacimiz eklenen image'i UITableView'de guncellemek icin notcenter kullanmaktir.
-        // Burdan projemizdeki ViewController'a bir mesaj gondeririz (name: String ile) ve VC DetailVC'den aldigi mesajla ne yapmasi gerektigini anlar (biz projemizde get data func'u cagiracagiz) iki VC arasi bir cesit mektuplasma gibi dusunulebilir
+        // Burdan projemizdeki ViewController'a bir mesaj gondeririz (name: String ile) ve ana VC ImageDetailsVC'den aldigi mesajla ne yapmasi gerektigini anlar (biz projemizde get data func'u cagiracagiz) iki VC arasi bir cesit mektuplasma gibi dusunulebilir
         // Notification Center'a VC'da ViewWillAppear icerisinde cagirmaliyiz ki her vc'a donusde bu methodumuz tetiklensin, didLoad'da bunu basaramayiz.
         NotificationCenter.default.post(name: NSNotification.Name("newData"), object: nil)
         

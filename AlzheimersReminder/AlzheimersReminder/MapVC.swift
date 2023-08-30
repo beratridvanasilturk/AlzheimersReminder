@@ -12,35 +12,35 @@ import CoreData
 
 class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
     
+    //MARK: -Variables
     var chosenLocationTitle = ""
     var chosenLongitutePoint = Double()
     var chosenLatitudePoint = Double()
     
-    
     // Cell secildikten sonra MapVC'de secilen cell'in icerigini gostermek icin kullanilir
     var selectedTitle = ""
     var selectedTitleId : UUID?
-    
+
     // Annotation'u Cora Data'dan Cekip Map'da Gostermek Icin Kullanacagiz
     var annotationTitle = ""
     var annotationSubtitle = ""
     var annotationLatitute = Double()
     var annotationLongitute = Double()
     
-    
-    
-    @IBOutlet weak var locationTitleTextField: UITextField!
-    
-    @IBOutlet weak var locationSubtitleTextField: UITextField!
-    //MARK: -Outlets
-    @IBOutlet weak var mapView: MKMapView!
     // "CoreLocation Lokasyon Manageri" eklendi
     var locationManager = CLLocationManager()
+    
+    //MARK: -Outlets
+    @IBOutlet weak var locationTitleTextField: UITextField!
+    @IBOutlet weak var locationSubtitleTextField: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
     
     //MARK: -Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationTitleTextField.backgroundColor = .cyan.withAlphaComponent(0.7)
+        locationSubtitleTextField.backgroundColor = .magenta.withAlphaComponent(0.6)
         
         mapView.delegate = self
         locationManager.delegate = self
@@ -51,9 +51,9 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         // Kullanicidan izin istenir
         // Yine uygulamalarin amaclarina gore izin isteme sıklıgı degisebilir. Bu projede kullanicinin guvenligi icin "requestWhenInUseAuthorization" kullanacagiz ancak .plist'e bir uyari mesaji gondererek uygulama kullanilirken konuma surekli izin vermesi gerektigini hatirlatacagiz.
         locationManager.requestWhenInUseAuthorization()
+        
         // Kullanicinin lokasyonu alinmaya baslanir.
         locationManager.startUpdatingLocation()
-        
         
         // Gesture Recognizer'i burada haritaya pin eklemek icin kullanacagiz
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choseLocation(gestureRecognizer:)))
@@ -63,11 +63,9 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         
         mapView.addGestureRecognizer(gestureRecognizer)
         
-        
         if selectedTitle != "" {
             
             // Core Data'dan Annotation'u Yani Pin'i cekecegiz
-            
             // Ilk olarak appDelegate'i cagirdik
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             // Context'i (baglam) olusturduk
@@ -76,11 +74,12 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             // Entity name ve NsFetchRequestResult protocol'u ile fetchRequest olusturulur
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
             
-            // TIKLANAN YERIN ID'SINI VERIR
+            // Tiklanan yerin id'sini verir, bu unique degeri kullanarak datalari fetch edecegiz.
             let idString = selectedTitleId?.uuidString
+            
             // Predicate bizim yazdigimiz kosulu bulup bize fetch eder
             // id = %@ : id'si virgulden sonraki argumana (idString'e) esit olan seyi bul anlamindadir
-            // id yerine name getirmesini isteseydik ..format: "name = %@", self.chosenImage) yazardik. Biz ayni name'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
+            // id yerine title getirmesini isteseydik ..format: "title = %@", self.chosenLocationTitle) yazardik. Biz ayni title'de birden fazla ornek olabilitesi acisindan proje basinda id'ye gore fetch etmeyi dusunduk.
             fetchRequest.predicate = NSPredicate(format: "id2 = %@", idString!)
             
             // Verimi artirmak icin cache datalari duzenler
@@ -121,42 +120,30 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
                                         
                                         // Lokasyonu guncellemeyi kullanici hareket etmesi olasiligina karsin durdurduk.
                                         locationManager.stopUpdatingLocation()
-                                        // Core Data'dan Annotation Pin Cekme Islemi Sonuclanir
+                                        // Boylelikle Core Data'dan Annotation Pin Cekme Islemi Sonuclanir
                                         
                                         // Secilen Annotation'a Zoom yapar
                                         // 6 kod yukardaki location'u alip span ile birlikte zoomda kullanacagiz
                                         let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
                                         let region = MKCoordinateRegion(center: coordinate, span: span)
                                         mapView.setRegion(region, animated: true)
-                                        
-                                        
                                     }
                                 }
                             }
                         }
                     }
                 }
-                
             } catch {
                 print("Error do-catch in DetailsVC")
-                
             }
         }
         else {
-            
             // Secilen bir sey yoksa textfield'lari sifirlar
             locationTitleTextField.text = ""
             locationSubtitleTextField.text = ""
-            
         }
-        
-        
-        
-        
     }
     
-    
-    // MARK: TRUE
     // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
     // CLLocation enlem ve boylam icerir
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -174,23 +161,24 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             let region = MKCoordinateRegion(center: location, span: span)
             // Belirtilen enlem ve boylama yani bolgeye zoomlama islemini tamamlar
             mapView.setRegion(region, animated: true)
-            
         }
     }
     
     // choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
-    // MARK: TRUE
     @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
+        
         // Gesture Recognizer baslama durumunu kontrol eder
         if gestureRecognizer.state == .began {
+            
             // Toucked point kullanicinin dokunmus oldugu noktanin lokasyonunu almak icin kullanilir
             let touchedPoint = gestureRecognizer.location(in: self.mapView)
+            
             // Dokunulan point'i coordinate'a cevirir
             let touchedCoordinate = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
             
-            // CORE DATA'YA ENLEM BOYLAM ATAMAK ICIN DATAYI BURDAN CEKTIK
+            // Core Data'ya Enlem ve Boylam atamak icin burdan cekeriz gerekli bilgileri
             // Core Dataya long ve latitude'u kaydetmek icin clasimizda birer degisken olusturup burdan aldigimiz long ve lat'leri o degiskene atar ve daha sonrasinda SaveButton'dan Core Data'ya aktaririz
-            // Save Button Tapped ' da Attribute'lerde Core Data'ya Latitude ve Longitute Eklemek Ici Kullandik
+            // Save Button Tapped ' da Attribute'lerde Core Data'ya Latitude ve Longitute Eklemek Icin Kullandik
             chosenLatitudePoint = touchedCoordinate.latitude
             chosenLongitutePoint = touchedCoordinate.longitude
             
@@ -202,24 +190,24 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
             annotation.subtitle = locationSubtitleTextField.text
             
             self.mapView.addAnnotation(annotation)
-            
         }
     }
     
-    // Navigasyon ozelligi icin kullanilir, Core Data'daki annotationlara gitmek icin navigasyon gibi kullanacagiz. Pin yaninda popup acip ona tiklayarak bulundugumuz konumdan o pin'e erismeyi planladik
+    // Navigasyon ozelligi icin kullanilir, Core Data'daki annotationlara gitmek icin navigasyon gibi kullanacagiz. Harita icerisindeki pin yaninda ufak popup acip ona tiklayarak bulundugumuz konumdan o pin'e erismeyi planladik
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         // annotation func girisinden aldik
-        //MKUserLocation kullanicinin yerini pinle gosterir biz ise kullanicinin tikladigi yeri pin ile gostermek istiyoruz
+        // MKUserLocation kullanicinin yerini pinle gosterir biz ise kullanicinin tikladigi yeri pin ile gostermek istiyoruz
         if annotation is MKUserLocation{
             return nil
         }
         
+        // Bu yuzden yeni pin'i kendimiz olusturuyoruz
         let reUseId = "myAnnotation"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reUseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reUseId) as? MKMarkerAnnotationView
         
         if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reUseId)
+            pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reUseId)
             // Callout baloncukla ekstra bilgl gosterebildigimiz yerdir
             pinView?.canShowCallout = true
             pinView?.tintColor = UIColor.black
@@ -233,7 +221,6 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         return pinView
     }
     
-    
     @IBAction func saveButtonTapped(_ sender: Any) {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -241,9 +228,7 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         // Seperated Entity Names with Image View Cont (DetailVC)
         let newLocation = NSEntityDescription.insertNewObject(forEntityName: "Entity", into: context)
         
-        
         // Attributes
-        
         newLocation.setValue(locationTitleTextField.text, forKey: "title")
         newLocation.setValue(locationSubtitleTextField.text, forKey: "subtitle")
         
@@ -253,32 +238,33 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         
         newLocation.setValue(UUID(), forKey: "id2")
         
-        
         do {
             try context.save()
             print("Core Data Saving Success")
         } catch{
             print("Core Data Saving Error")
         }
-        // Observer'lar icin (view controller arasi) mesaj yollama tool'udur,
-        // Amacimiz eklenen image'i UITableView'de guncellemek icin notcenter kullanmaktir.
-        // Burdan projemizdeki ViewController'a bir mesaj gondeririz (name: String ile) ve VC DetailVC'den aldigi mesajla ne yapmasi gerektigini anlar (biz projemizde get data func'u cagiracagiz) iki VC arasi bir cesit mektuplasma gibi dusunulebilir
-        // Notification Center'a VC'da ViewWillAppear icerisinde cagirmaliyiz ki her vc'a donusde bu methodumuz tetiklensin, didLoad'da bunu basaramayiz.
+        // Not Center observer'lar icin (view controller arasi) mesaj yollama tool'udur,
+        // Amacimiz eklenen yeri UITableView'de guncellemek icin notcenter kullanmaktir.
+        // Burdan projemizdeki LocationViewController'a bir mesaj gondeririz (name: String ile) ve ana VC (locationlistVc) MapVC'den aldigi mesajla ne yapmasi gerektigini anlar (biz projemizde get data func'u cagiracagiz) iki VC arasi bir cesit mektuplasma gibi dusunulebilir
+        // Notification Center'a LocationVC'da ViewWillAppear icerisinde cagirmaliyiz ki her vc'a donusde bu methodumuz tetiklensin, didLoad'da bunu basaramayiz.
         NotificationCenter.default.post(name: NSNotification.Name("newPlace"), object: nil)
         
         // Bir onceki VC'a gecis icin kullanilir
         self.navigationController?.popViewController(animated: true)
-        
     }
     
     // Callout'a tiklandigini kontrol eden fonksiyondur
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
         if selectedTitle != "" {
             
-            var requestLocation = CLLocation(latitude: annotationLatitute, longitude: annotationLongitute)
+            let requestLocation = CLLocation(latitude: annotationLatitute, longitude: annotationLongitute)
+            
             // CLGeocoder: Coordinatlar ve yerler arasinda baglanti kurmada kullanilir
             CLGeocoder().reverseGeocodeLocation(requestLocation) { placemarks, error in
-                // Complation Handler
+                
+                // Used Complation Handler
                 if let placemark = placemarks {
                     
                     if placemark.count > 0 {
@@ -287,16 +273,13 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
                         let item = MKMapItem(placemark: newPlacemark)
                         
                         item.name = self.annotationTitle
+                        
                         // MKLaunchOptionsDirectionsModeKey : Mode of transportation Hangi arac ile gosterilmesi istedigini belirler (Araba yuruyerek vs)
                         let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
                         
                         item.openInMaps()
-                        
-                        
-                        
                     }
                 }
-                
             }
         }
     }
