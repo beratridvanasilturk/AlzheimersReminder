@@ -40,7 +40,7 @@ class LocationListViewController: UIViewController, UITableViewDelegate, UITable
         
         // newData mesajini gordugunde getData'yi cagirir
         // Yani kisaca eklenen image'i UI'da (UITableView'de) guncellemek icin notcenter kullandik
-        NotificationCenter.default.addObserver(self, selector: #selector(getData2), name: NSNotification.Name(rawValue: "newData2"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getData2), name: NSNotification.Name(rawValue: "newPlace"), object: nil)
     
     }
     

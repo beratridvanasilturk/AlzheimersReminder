@@ -11,7 +11,7 @@ import CoreLocation
 import CoreData
 
 class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
-
+    
     var chosenLocationTitle = ""
     var chosenLongitutePoint = Double()
     var chosenLatitudePoint = Double()
@@ -27,7 +27,7 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
     var annotationLatitute = Double()
     var annotationLongitute = Double()
     
-  
+    
     
     @IBOutlet weak var locationTitleTextField: UITextField!
     
@@ -102,35 +102,35 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
                                 if let latitude = result.value(forKey: "latitute") as? Double {
                                     annotationLatitute = latitude
                                     
-                                     if let longitute = result.value(forKey: "longitute") as? Double{
-                                         annotationLongitute = longitute
-                                         
-                                         // Eger tum degerler olduysa artik annotation'u olusturabiliriz
-                                         
-                                         let annotation = MKPointAnnotation()
-                                         annotation.title = annotationTitle
-                                         annotation.subtitle = annotationSubtitle
-                                         
-                                         let coordinate = CLLocationCoordinate2D(latitude: annotationLatitute, longitude: annotationLongitute)
-                                         annotation.coordinate = coordinate
-                                         
-                                         mapView.addAnnotation(annotation)
-                                         
-                                         locationTitleTextField.text = annotationTitle
-                                         locationSubtitleTextField.text = annotationSubtitle
-                                         
-                                         // Lokasyonu guncellemeyi kullanici hareket etmesi olasiligina karsin durdurduk.
-                                         locationManager.stopUpdatingLocation()
-                                         // Core Data'dan Annotation Pin Cekme Islemi Sonuclanir
-                                         
-                                         // Secilen Annotation'a Zoom yapar
-                                         // 6 kod yukardaki location'u alip span ile birlikte zoomda kullanacagiz
-                                         let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
-                                         let region = MKCoordinateRegion(center: coordinate, span: span)
-                                         mapView.setRegion(region, animated: true)
-                                         
-                                         
-                                     }
+                                    if let longitute = result.value(forKey: "longitute") as? Double{
+                                        annotationLongitute = longitute
+                                        
+                                        // Eger tum degerler olduysa artik annotation'u olusturabiliriz
+                                        
+                                        let annotation = MKPointAnnotation()
+                                        annotation.title = annotationTitle
+                                        annotation.subtitle = annotationSubtitle
+                                        
+                                        let coordinate = CLLocationCoordinate2D(latitude: annotationLatitute, longitude: annotationLongitute)
+                                        annotation.coordinate = coordinate
+                                        
+                                        mapView.addAnnotation(annotation)
+                                        
+                                        locationTitleTextField.text = annotationTitle
+                                        locationSubtitleTextField.text = annotationSubtitle
+                                        
+                                        // Lokasyonu guncellemeyi kullanici hareket etmesi olasiligina karsin durdurduk.
+                                        locationManager.stopUpdatingLocation()
+                                        // Core Data'dan Annotation Pin Cekme Islemi Sonuclanir
+                                        
+                                        // Secilen Annotation'a Zoom yapar
+                                        // 6 kod yukardaki location'u alip span ile birlikte zoomda kullanacagiz
+                                        let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+                                        let region = MKCoordinateRegion(center: coordinate, span: span)
+                                        mapView.setRegion(region, animated: true)
+                                        
+                                        
+                                    }
                                 }
                             }
                         }
@@ -142,23 +142,23 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
                 
             }
         }
-            else {
+        else {
+            
+            // Secilen bir sey yoksa textfield'lari sifirlar
+            locationTitleTextField.text = ""
+            locationSubtitleTextField.text = ""
+            
+        }
         
-                // Secilen bir sey yoksa textfield'lari sifirlar
-                locationTitleTextField.text = ""
-                locationSubtitleTextField.text = ""
-                
-            }
-            
-            
-      
-
+        
+        
+        
     }
     
-
-        // MARK: TRUE
-        // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
-        // CLLocation enlem ve boylam icerir
+    
+    // MARK: TRUE
+    // DidUptadeLocations: Guncellenen lokasyonlari array icerisinde verern hazir functur
+    // CLLocation enlem ve boylam icerir
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         // Sadece Secilen Baslik Bos Ise Haritayi Gunceller, Boylelikle View DidLoad'daki Core Data'dan Alinan Annotation Gosterilirken Bir Yandan Da Hareketle Konumun Degismesi Engellenir
@@ -178,8 +178,8 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-// choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
-// MARK: TRUE
+    // choseLocation'a input olarak UILongPressGestureRecognizer'i vermemizin amaci o fonksiyon icerisinde UILongPressGestureRecognizer'in ozelliklerine "." koyduktan sonra direkt kendi methodlarina kendi attributelerine ulasabilmek icindir.
+    // MARK: TRUE
     @objc func choseLocation(gestureRecognizer: UILongPressGestureRecognizer) {
         // Gesture Recognizer baslama durumunu kontrol eder
         if gestureRecognizer.state == .began {
@@ -206,10 +206,36 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+    // Navigasyon ozelligi icin kullanilir, Core Data'daki annotationlara gitmek icin navigasyon gibi kullanacagiz. Pin yaninda popup acip ona tiklayarak bulundugumuz konumdan o pin'e erismeyi planladik
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        // annotation func girisinden aldik
+        //MKUserLocation kullanicinin yerini pinle gosterir biz ise kullanicinin tikladigi yeri pin ile gostermek istiyoruz
+        if annotation is MKUserLocation{
+            return nil
+        }
+        
+        let reUseId = "myAnnotation"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reUseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reUseId)
+            // Callout baloncukla ekstra bilgl gosterebildigimiz yerdir
+            pinView?.canShowCallout = true
+            pinView?.tintColor = UIColor.black
+            
+            let button = UIButton(type: UIButton.ButtonType.detailDisclosure)
+            pinView?.rightCalloutAccessoryView = button
+            
+        } else {
+            pinView?.annotation = annotation
+        }
+        return pinView
+    }
     
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-    
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         // Seperated Entity Names with Image View Cont (DetailVC)
@@ -226,7 +252,7 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         newLocation.setValue(chosenLongitutePoint, forKey: "longitute")
         
         newLocation.setValue(UUID(), forKey: "id2")
-      
+        
         
         do {
             try context.save()
@@ -238,11 +264,40 @@ class MapVC: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
         // Amacimiz eklenen image'i UITableView'de guncellemek icin notcenter kullanmaktir.
         // Burdan projemizdeki ViewController'a bir mesaj gondeririz (name: String ile) ve VC DetailVC'den aldigi mesajla ne yapmasi gerektigini anlar (biz projemizde get data func'u cagiracagiz) iki VC arasi bir cesit mektuplasma gibi dusunulebilir
         // Notification Center'a VC'da ViewWillAppear icerisinde cagirmaliyiz ki her vc'a donusde bu methodumuz tetiklensin, didLoad'da bunu basaramayiz.
-        NotificationCenter.default.post(name: NSNotification.Name("newData2"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("newPlace"), object: nil)
         
         // Bir onceki VC'a gecis icin kullanilir
         self.navigationController?.popViewController(animated: true)
         
     }
     
+    // Callout'a tiklandigini kontrol eden fonksiyondur
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if selectedTitle != "" {
+            
+            var requestLocation = CLLocation(latitude: annotationLatitute, longitude: annotationLongitute)
+            // CLGeocoder: Coordinatlar ve yerler arasinda baglanti kurmada kullanilir
+            CLGeocoder().reverseGeocodeLocation(requestLocation) { placemarks, error in
+                // Complation Handler
+                if let placemark = placemarks {
+                    
+                    if placemark.count > 0 {
+                        
+                        let newPlacemark = MKPlacemark(placemark: placemark[0])
+                        let item = MKMapItem(placemark: newPlacemark)
+                        
+                        item.name = self.annotationTitle
+                        // MKLaunchOptionsDirectionsModeKey : Mode of transportation Hangi arac ile gosterilmesi istedigini belirler (Araba yuruyerek vs)
+                        let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                        
+                        item.openInMaps()
+                        
+                        
+                        
+                    }
+                }
+                
+            }
+        }
+    }
 }
